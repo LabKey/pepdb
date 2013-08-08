@@ -1,0 +1,590 @@
+<!--
+* Copyright (c) 2003-2012 Fred Hutchinson Cancer Research Center * * Licensed under the Apache License, Version 2.0 (the "License"); * you may not use this file except in compliance with the License. * You may obtain a copy of the License at * * http://www.apache.org/licenses/LICENSE-2.0 * * Unless required by applicable law or agreed to in writing, software * distributed under the License is distributed on an "AS IS" BASIS, * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. * See the License for the specific language governing permissions and * limitations under the License.
+-->
+<ns:tables xmlns:ns="http://labkey.org/data/xml">
+    <ns:table tableName="protein_category" tableDbType="TABLE">
+        <ns:columns>
+            <ns:column columnName="protein_cat_id"/>
+            <ns:column columnName="protein_cat_desc"/>
+        </ns:columns>
+    </ns:table>
+    <ns:table tableName="group_type" tableDbType="TABLE">
+        <ns:columns>
+            <ns:column columnName="group_type_id"/>
+            <ns:column columnName="group_type_desc"/>
+        </ns:columns>
+    </ns:table>
+    <ns:table tableName="group_peptides" tableDbType="VIEW">
+        <ns:columns>
+            <ns:column columnName="peptide_group_assignment_id"/>
+            <ns:column columnName="peptide_id">
+                <ns:columnTitle>Peptide Id</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="peptide_group_id">
+                <ns:columnTitle>Peptide Group Id</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="peptide_id_in_group">
+                <ns:columnTitle>Lab ID</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="peptide_group_name">
+                <ns:columnTitle>Peptide Group Name</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="pathogen_id">
+                <ns:columnTitle>Pathogen</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>pathogen_id</ns:fkColumnName>
+                    <ns:fkTable>pathogen</ns:fkTable>
+                    <ns:fkDbSchema>pepdb</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="peptide_sequence">
+                <ns:columnTitle>Peptide Sequence</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="protein_cat_id">
+                <ns:columnTitle>Protein Category</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>protein_cat_id</ns:fkColumnName>
+                    <ns:fkTable>protein_category</ns:fkTable>
+                    <ns:fkDbSchema>pepdb</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="sequence_length">
+                <ns:columnTitle>Sequence Length</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="amino_acid_start_pos">
+                <ns:columnTitle>AA Start</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="amino_acid_end_pos">
+                <ns:columnTitle>AA End</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="child">
+                <ns:columnTitle>Is Child</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="parent">
+                <ns:columnTitle>Is Parent</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="optimal_epitope_list_id">
+                <ns:columnTitle>Optimal Epitope List</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>optimal_epitope_list_id</ns:fkColumnName>
+                    <ns:fkTable>optimal_epitope_list</ns:fkTable>
+                    <ns:fkDbSchema>pepdb</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="hla_restriction">
+                <ns:columnTitle>HLA Restriction</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="peptide_flag">
+                <ns:columnTitle>Peptide Flag</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="peptide_notes">
+                <ns:columnTitle>Peptide Flag Reason</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="frequency_number">
+                <ns:columnTitle>Frequency Number</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="frequency_number_date">
+                <ns:columnTitle>Frequency Update Date</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="in_current_file"/>
+        </ns:columns>
+    </ns:table>
+    <ns:table tableName="peptide_pool" tableDbType="TABLE">
+        <ns:columns>
+            <ns:column columnName="_ts"/>
+            <ns:column columnName="createdby">
+                <ns:columnTitle>Created By</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>UserId</ns:fkColumnName>
+                    <ns:fkTable>Users</ns:fkTable>
+                    <ns:fkDbSchema>core</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="created">
+                <ns:formatString>dd-MMM-yy</ns:formatString>
+            </ns:column>
+            <ns:column columnName="modifiedby">
+                <ns:columnTitle>Modified By</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>UserId</ns:fkColumnName>
+                    <ns:fkTable>Users</ns:fkTable>
+                    <ns:fkDbSchema>core</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="modified">
+                <ns:formatString>dd-MMM-yy</ns:formatString>
+            </ns:column>
+            <ns:column columnName="peptide_pool_id"/>
+            <ns:column columnName="peptide_pool_name">
+                <ns:inputRows>1</ns:inputRows>
+                <ns:isReadOnly>true</ns:isReadOnly>
+            </ns:column>
+            <ns:column columnName="pool_type_id">
+                <ns:columnTitle>Pool Type</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>pool_type_id</ns:fkColumnName>
+                    <ns:fkTable>pool_type</ns:fkTable>
+                    <ns:fkDbSchema>pepdb</ns:fkDbSchema>
+                </ns:fk>
+                <ns:isReadOnly>true</ns:isReadOnly>
+            </ns:column>
+            <ns:column columnName="comment">
+                <ns:inputRows>1</ns:inputRows>
+            </ns:column>
+            <ns:column columnName="archived"/>
+            <ns:column columnName="parent_pool_id"/>
+            <ns:column columnName="matrix_peptide_pool_id"/>
+        </ns:columns>
+    </ns:table>
+    <ns:table tableName="pool_details" tableDbType="VIEW">
+        <ns:columns>
+            <ns:column columnName="_ts"/>
+            <ns:column columnName="createdby">
+                <ns:columnTitle>Created By</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>UserId</ns:fkColumnName>
+                    <ns:fkTable>Users</ns:fkTable>
+                    <ns:fkDbSchema>core</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="created">
+                <ns:formatString>dd-MMM-yy</ns:formatString>
+            </ns:column>
+            <ns:column columnName="modifiedby">
+                <ns:columnTitle>Modified By</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>UserId</ns:fkColumnName>
+                    <ns:fkTable>Users</ns:fkTable>
+                    <ns:fkDbSchema>core</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="modified">
+                <ns:formatString>dd-MMM-yy</ns:formatString>
+            </ns:column>
+            <ns:column columnName="peptide_pool_id"/>
+            <ns:column columnName="peptide_pool_name">
+                <ns:inputRows>1</ns:inputRows>
+                <ns:isReadOnly>true</ns:isReadOnly>
+            </ns:column>
+            <ns:column columnName="pool_type_id">
+                <ns:columnTitle>Pool Type</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>pool_type_id</ns:fkColumnName>
+                    <ns:fkTable>pool_type</ns:fkTable>
+                    <ns:fkDbSchema>pepdb</ns:fkDbSchema>
+                </ns:fk>
+                <ns:isReadOnly>true</ns:isReadOnly>
+            </ns:column>
+            <ns:column columnName="pool_type_desc"/>
+            <ns:column columnName="comment">
+                <ns:inputRows>1</ns:inputRows>
+            </ns:column>
+            <ns:column columnName="archived"/>
+            <ns:column columnName="parent_pool_id"/>
+            <ns:column columnName="matrix_peptide_pool_id"/>
+            <ns:column columnName="parent_pool_name"/>
+        </ns:columns>
+    </ns:table>
+    <ns:table tableName="temp_peppoolgroupassign" tableDbType="TABLE">
+        <ns:columns>
+            <ns:column columnName="peptide_pool_assignment_id"/>
+            <ns:column columnName="peptide_group_assignment_id"/>
+        </ns:columns>
+    </ns:table>
+    <ns:table tableName="parent" tableDbType="TABLE">
+        <ns:columns>
+            <ns:column columnName="_ts"/>
+            <ns:column columnName="createdby"/>
+            <ns:column columnName="created"/>
+            <ns:column columnName="modifiedby"/>
+            <ns:column columnName="modified"/>
+            <ns:column columnName="peptide_id"/>
+            <ns:column columnName="linked_parent"/>
+        </ns:columns>
+    </ns:table>
+    <ns:table tableName="pathogen" tableDbType="TABLE">
+        <ns:columns>
+            <ns:column columnName="pathogen_id"/>
+            <ns:column columnName="pathogen_desc"/>
+        </ns:columns>
+    </ns:table>
+    <ns:table tableName="peptide_group_assignment" tableDbType="TABLE">
+        <ns:columns>
+            <ns:column columnName="_ts"/>
+            <ns:column columnName="createdby"/>
+            <ns:column columnName="created"/>
+            <ns:column columnName="modifiedby"/>
+            <ns:column columnName="modified"/>
+            <ns:column columnName="peptide_group_assignment_id"/>
+            <ns:column columnName="peptide_id"/>
+            <ns:column columnName="peptide_group_id"/>
+            <ns:column columnName="peptide_id_in_group"/>
+            <ns:column columnName="frequency_number"/>
+            <ns:column columnName="frequency_number_date"/>
+            <ns:column columnName="in_current_file"/>
+        </ns:columns>
+    </ns:table>
+    <ns:table tableName="peptide_pool_assignment" tableDbType="TABLE">
+        <ns:columns>
+            <ns:column columnName="_ts"/>
+            <ns:column columnName="createdby"/>
+            <ns:column columnName="created"/>
+            <ns:column columnName="modifiedby"/>
+            <ns:column columnName="modified"/>
+            <ns:column columnName="peptide_pool_assignment_id"/>
+            <ns:column columnName="peptide_pool_id"/>
+            <ns:column columnName="peptide_id"/>
+            <ns:column columnName="peptide_group_assignment_id"/>
+        </ns:columns>
+    </ns:table>
+    <ns:table tableName="parent_child_details" tableDbType="VIEW">
+        <ns:columns>
+            <ns:column columnName="child_id">
+                <ns:columnTitle>Child ID</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="child_sequence">
+                <ns:columnTitle>Child Sequence</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="child_protein">
+                <ns:columnTitle>Child Protein Category</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>protein_cat_id</ns:fkColumnName>
+                    <ns:fkTable>protein_category</ns:fkTable>
+                    <ns:fkDbSchema>pepdb</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="child_group">
+                <ns:columnTitle>Child Peptide Group</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>peptide_group_id</ns:fkColumnName>
+                    <ns:fkTable>peptide_group</ns:fkTable>
+                    <ns:fkDbSchema>pepdb</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="child_lab_id">
+                <ns:columnTitle>Child Lab ID</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="child_seq_length">
+                <ns:columnTitle>Child Sequence Length</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="child_aastart">
+                <ns:columnTitle>Child AAStart</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="child_aaend">
+                <ns:columnTitle>Child AAEnd</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="child_optimal_epitope_list_id">
+                <ns:columnTitle>Child Optimal Epitope List</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>optimal_epitope_list_id</ns:fkColumnName>
+                    <ns:fkTable>optimal_epitope_list</ns:fkTable>
+                    <ns:fkDbSchema>pepdb</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="child_hla_restriction">
+                <ns:columnTitle>Child HLA Restriction</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="child_peptide_flag">
+                <ns:columnTitle>Child Peptide Flag</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="child_peptide_notes">
+                <ns:columnTitle>Child Flag Reason</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="parent_id">
+                <ns:columnTitle>Parent ID</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="parent_sequence">
+                <ns:columnTitle>Parent Sequence</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="parent_protein">
+                <ns:columnTitle>Parent Protein Category</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>protein_cat_id</ns:fkColumnName>
+                    <ns:fkTable>protein_category</ns:fkTable>
+                    <ns:fkDbSchema>pepdb</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="parent_group">
+                <ns:columnTitle>Parent Peptide Group</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>peptide_group_id</ns:fkColumnName>
+                    <ns:fkTable>peptide_group</ns:fkTable>
+                    <ns:fkDbSchema>pepdb</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="parent_lab_id">
+                <ns:columnTitle>Parent Lab ID</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="parent_seq_length">
+                <ns:columnTitle>Parent Sequence Length</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="parent_aastart">
+                <ns:columnTitle>Parent AAStart</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="parent_aaend">
+                <ns:columnTitle>Parent AAEnd</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="parent_peptide_flag">
+                <ns:columnTitle>Parent Peptide Flagged</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="parent_peptide_notes">
+                <ns:columnTitle>Parent Flag Reason</ns:columnTitle>
+                <ns:inputRows>2</ns:inputRows>
+            </ns:column>
+        </ns:columns>
+    </ns:table>
+    <ns:table tableName="peptides" tableDbType="TABLE">
+        <ns:columns>
+            <ns:column columnName="_ts"/>
+            <ns:column columnName="createdby">
+                <ns:columnTitle>Created By</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>UserId</ns:fkColumnName>
+                    <ns:fkTable>Users</ns:fkTable>
+                    <ns:fkDbSchema>core</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="created">
+                <ns:formatString>dd-MMM-yy</ns:formatString>
+            </ns:column>
+            <ns:column columnName="modifiedby">
+                <ns:columnTitle>Modified By</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>UserId</ns:fkColumnName>
+                    <ns:fkTable>Users</ns:fkTable>
+                    <ns:fkDbSchema>core</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="modified">
+                <ns:formatString>dd-MMM-yy</ns:formatString>
+            </ns:column>
+            <ns:column columnName="peptide_id"/>
+            <ns:column columnName="peptide_sequence">
+                <ns:inputRows>1</ns:inputRows>
+                <ns:isReadOnly>true</ns:isReadOnly>
+            </ns:column>
+            <ns:column columnName="protein_cat_id">
+                <ns:columnTitle>Protein Category</ns:columnTitle>
+                <ns:isReadOnly>true</ns:isReadOnly>
+                <ns:fk>
+                    <ns:fkColumnName>protein_cat_id</ns:fkColumnName>
+                    <ns:fkTable>protein_category</ns:fkTable>
+                    <ns:fkDbSchema>pepdb</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="amino_acid_start_pos">
+                <ns:columnTitle>AAStart</ns:columnTitle>
+                <ns:isReadOnly>true</ns:isReadOnly>
+            </ns:column>
+            <ns:column columnName="amino_acid_end_pos">
+                <ns:columnTitle>AAEnd</ns:columnTitle>
+                <ns:isReadOnly>true</ns:isReadOnly>
+            </ns:column>
+            <ns:column columnName="sequence_length">
+                <ns:isReadOnly>true</ns:isReadOnly>
+            </ns:column>
+            <ns:column columnName="child">
+                <ns:columnTitle>Is Child</ns:columnTitle>
+                <ns:isReadOnly>true</ns:isReadOnly>
+            </ns:column>
+            <ns:column columnName="parent">
+                <ns:columnTitle>Is Parent</ns:columnTitle>
+                <ns:isReadOnly>true</ns:isReadOnly>
+            </ns:column>
+            <ns:column columnName="src_file_name">
+                <ns:columnTitle>Source File Name</ns:columnTitle>
+                <ns:inputRows>1</ns:inputRows>
+                <ns:isReadOnly>true</ns:isReadOnly>
+            </ns:column>
+            <ns:column columnName="storage_location">
+                <ns:inputRows>1</ns:inputRows>
+            </ns:column>
+            <ns:column columnName="optimal_epitope_list_id">
+                <ns:columnTitle>Optimal Epitope List</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>optimal_epitope_list_id</ns:fkColumnName>
+                    <ns:fkTable>optimal_epitope_list</ns:fkTable>
+                    <ns:fkDbSchema>pepdb</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="hla_restriction">
+                <ns:inputRows>1</ns:inputRows>
+            </ns:column>
+            <ns:column columnName="peptide_flag">
+                <ns:columnTitle>Peptide Is Flagged</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="peptide_notes">
+                <ns:columnTitle>Peptide Flag Reason</ns:columnTitle>
+                <ns:inputRows>2</ns:inputRows>
+            </ns:column>
+        </ns:columns>
+    </ns:table>
+    <ns:table tableName="pool_peptides" tableDbType="VIEW">
+        <ns:columns>
+            <ns:column columnName="peptide_pool_assignment_id"/>
+            <ns:column columnName="peptide_id">
+                <ns:columnTitle>Peptide ID</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="peptide_pool_id">
+                <ns:columnTitle>Peptide Pool ID</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="peptide_sequence">
+                <ns:columnTitle>Peptide Sequence</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="protein_cat_id">
+                <ns:columnTitle>Protein Category</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>protein_cat_id</ns:fkColumnName>
+                    <ns:fkTable>protein_category</ns:fkTable>
+                    <ns:fkDbSchema>pepdb</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="peptide_group_id">
+                <ns:columnTitle>Peptide Group</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>peptide_group_id</ns:fkColumnName>
+                    <ns:fkTable>peptide_group</ns:fkTable>
+                    <ns:fkDbSchema>pepdb</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="peptide_id_in_group">
+                <ns:columnTitle>Lab ID</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="sequence_length">
+                <ns:columnTitle>Sequence Length</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="amino_acid_start_pos">
+                <ns:columnTitle>AAStart</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="amino_acid_end_pos">
+                <ns:columnTitle>AAEnd</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="child">
+                <ns:columnTitle>Is Child</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="parent">
+                <ns:columnTitle>Is Parent</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="peptide_flag">
+                <ns:columnTitle>Peptide Flag</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="peptide_notes">
+                <ns:columnTitle>Flag Reason</ns:columnTitle>
+                <ns:inputRows>2</ns:inputRows>
+            </ns:column>
+            <ns:column columnName="pool_type_id">
+                <ns:columnTitle>Pool Type</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>pool_type_id</ns:fkColumnName>
+                    <ns:fkTable>pool_type</ns:fkTable>
+                    <ns:fkDbSchema>pepdb</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="peptide_pool_name">
+                <ns:columnTitle>Peptide Pool Name</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="pool_type_desc">
+                <ns:columnTitle>Pool Type</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="archived">
+                <ns:columnTitle>Archived</ns:columnTitle>
+            </ns:column>
+        </ns:columns>
+    </ns:table>
+    <ns:table tableName="clade" tableDbType="TABLE">
+        <ns:columns>
+            <ns:column columnName="clade_id"/>
+            <ns:column columnName="clade_desc"/>
+        </ns:columns>
+    </ns:table>
+    <ns:table tableName="peptide_group" tableDbType="TABLE">
+        <ns:columns>
+            <ns:column columnName="_ts"/>
+            <ns:column columnName="createdby">
+                <ns:columnTitle>Created By</ns:columnTitle>
+                <ns:isReadOnly>true</ns:isReadOnly>
+                <ns:fk>
+                    <ns:fkColumnName>UserId</ns:fkColumnName>
+                    <ns:fkTable>Users</ns:fkTable>
+                    <ns:fkDbSchema>core</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="created">
+                <ns:isReadOnly>true</ns:isReadOnly>
+                <ns:formatString>dd-MMM-yy</ns:formatString>
+            </ns:column>
+            <ns:column columnName="modifiedby">
+                <ns:isReadOnly>true</ns:isReadOnly>
+                <ns:columnTitle>Modified By</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>UserId</ns:fkColumnName>
+                    <ns:fkTable>Users</ns:fkTable>
+                    <ns:fkDbSchema>core</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="modified">
+                <ns:isReadOnly>true</ns:isReadOnly>
+                <ns:formatString>dd-MMM-yy</ns:formatString>
+            </ns:column>
+            <ns:column columnName="peptide_group_id"/>
+            <ns:column columnName="peptide_group_name">
+                <ns:inputRows>1</ns:inputRows>
+                <ns:columnTitle>Peptide Group Name</ns:columnTitle>
+            </ns:column>
+            <ns:column columnName="pathogen_id">
+                <ns:columnTitle>Pathogen</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>pathogen_id</ns:fkColumnName>
+                    <ns:fkTable>pathogen</ns:fkTable>
+                    <ns:fkDbSchema>pepdb</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="seq_ref">
+                <ns:inputRows>1</ns:inputRows>
+            </ns:column>
+            <ns:column columnName="clade_id">
+                <ns:columnTitle>Clade</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>clade_id</ns:fkColumnName>
+                    <ns:fkTable>clade</ns:fkTable>
+                    <ns:fkDbSchema>pepdb</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="pep_align_ref_id">
+                <ns:columnTitle>Pep Align Ref</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>pep_align_ref_id</ns:fkColumnName>
+                    <ns:fkTable>pep_align_ref</ns:fkTable>
+                    <ns:fkDbSchema>pepdb</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+            <ns:column columnName="group_type_id">
+                <ns:columnTitle>Group Type</ns:columnTitle>
+                <ns:fk>
+                    <ns:fkColumnName>group_type_id</ns:fkColumnName>
+                    <ns:fkTable>group_type</ns:fkTable>
+                    <ns:fkDbSchema>pepdb</ns:fkDbSchema>
+                </ns:fk>
+            </ns:column>
+        </ns:columns>
+        <ns:pkColumnName>peptide_group_id</ns:pkColumnName>
+    </ns:table>
+    <ns:table tableName="pep_align_ref" tableDbType="TABLE">
+        <ns:columns>
+            <ns:column columnName="pep_align_ref_id"/>
+            <ns:column columnName="pep_align_ref_desc"/>
+        </ns:columns>
+    </ns:table>
+    <ns:table tableName="optimal_epitope_list" tableDbType="TABLE">
+        <ns:columns>
+            <ns:column columnName="optimal_epitope_list_id"/>
+            <ns:column columnName="optimal_epitope_list_desc"/>
+        </ns:columns>
+    </ns:table>
+    <ns:table tableName="pool_type" tableDbType="TABLE">
+        <ns:columns>
+            <ns:column columnName="pool_type_id"/>
+            <ns:column columnName="pool_type_desc"/>
+        </ns:columns>
+    </ns:table>
+</ns:tables>
