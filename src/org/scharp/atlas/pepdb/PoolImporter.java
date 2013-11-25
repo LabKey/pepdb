@@ -316,7 +316,7 @@ public class PoolImporter
                 {
                     Source src = PepDBManager.getSource(peptideSequenceMap.get(fields[1].trim().toUpperCase()).getPeptide_id(),peptideGroupMap.get(fields[2].trim().toUpperCase()).getPeptide_group_id());
                     if (src == null)
-                     errors.reject(null,"Line number : "+lineNo+" contains the 'PEPTIDE GROUP' = '"+ fields[1] + "' and 'PEPTIDE SEQUENCE' = '"+fields[2]+
+                     errors.reject(null,"Line number : "+lineNo+" contains the 'PEPTIDE GROUP' = '"+ fields[2] + "' and 'PEPTIDE SEQUENCE' = '"+fields[1]+
                             "' which are not associated in the database. Check the file and upload again or Add Peptide Sequence to the Peptide Group first before uploading pools.");
                     if(peptidePoolMap.containsKey(fields[0].trim().toUpperCase()))
                     {
