@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import org.apache.log4j.Logger;
 import org.labkey.api.data.*;
+import org.labkey.api.query.FieldKey;
 import org.labkey.api.security.User;
 import org.scharp.atlas.pepdb.model.*;
 
@@ -117,8 +118,8 @@ public class PepDBManager
     {
         TableInfo tInfo = PepDBSchema.getInstance().getTableInfoParent();
         Parent dbParent = null;
-        SimpleFilter sFilter = new SimpleFilter("peptide_id",p.getPeptide_id());
-        sFilter.addCondition("linked_parent",p.getLinked_parent());
+        SimpleFilter sFilter = new SimpleFilter(FieldKey.fromParts("peptide_id"), p.getPeptide_id());
+        sFilter.addCondition(FieldKey.fromParts("linked_parent"), p.getLinked_parent());
         Parent[] dbParents = Table.select(tInfo,
                 tInfo.getColumns("peptide_id,linked_parent")
                 ,sFilter,null,Parent.class);
@@ -130,7 +131,7 @@ public class PepDBManager
     public static Peptides peptideExists(Peptides p,TableInfo tInfo) throws SQLException
     {
         Peptides dbPeptide = null;
-        SimpleFilter sFilter = new SimpleFilter("peptide_sequence",p.getPeptide_sequence());
+        SimpleFilter sFilter = new SimpleFilter(FieldKey.fromParts("peptide_sequence"), p.getPeptide_sequence());
         Peptides[] dbPeptides = Table.select(tInfo,
                 tInfo.getColumns(),sFilter,null,Peptides.class);
         if(dbPeptides != null && dbPeptides.length>0)
@@ -141,8 +142,8 @@ public class PepDBManager
     public static Source insertSource(User user, Source src) throws Exception
     {
         TableInfo tInfo = PepDBSchema.getInstance().getTableInfoSource();
-        SimpleFilter sFilter = new SimpleFilter("peptide_group_id",src.getPeptide_group_id());
-        sFilter.addCondition("peptide_id",src.getPeptide_id());
+        SimpleFilter sFilter = new SimpleFilter(FieldKey.fromParts("peptide_group_id"), src.getPeptide_group_id());
+        sFilter.addCondition(FieldKey.fromParts("peptide_id"), src.getPeptide_id());
         Source dbSrc ;
         Source[] dbSrcs = Table.select(tInfo,tInfo.getColumns(),sFilter,null,Source.class);
         if(dbSrcs != null && dbSrcs.length>0)
@@ -167,8 +168,8 @@ public class PepDBManager
 
     public static PeptidePoolAssignment insertPeptidesInPool(User user,PeptidePoolAssignment src) throws Exception{
         TableInfo tInfo = PepDBSchema.getInstance().getTableInfoPoolAssignment();
-        SimpleFilter sFilter = new SimpleFilter("peptide_pool_id",src.getPeptide_pool_id());
-        sFilter.addCondition("peptide_id",src.getPeptide_id());
+        SimpleFilter sFilter = new SimpleFilter(FieldKey.fromParts("peptide_pool_id"), src.getPeptide_pool_id());
+        sFilter.addCondition(FieldKey.fromParts("peptide_id"), src.getPeptide_id());
         PeptidePoolAssignment dbSrc ;
         PeptidePoolAssignment[] dbSrcs = Table.select(tInfo,tInfo.getColumns(),sFilter,null,PeptidePoolAssignment.class);
         if(dbSrcs != null && dbSrcs.length>0)
@@ -183,7 +184,7 @@ public class PepDBManager
         Source[] sources = null;
         try
         {
-            SimpleFilter sfilter = new SimpleFilter("peptide_id", Integer.parseInt(peptideId));
+            SimpleFilter sfilter = new SimpleFilter(FieldKey.fromParts("peptide_id"), Integer.parseInt(peptideId));
             TableInfo tInfo = PepDBSchema.getInstance().getTableInfoViewGroupPeptides();
             sources = Table.select(tInfo,
                     tInfo.getColumns("peptide_group_id,peptide_id_in_group,peptide_group_name,frequency_number,frequency_number_date"),
@@ -205,7 +206,7 @@ public class PepDBManager
 
     public static PeptidePool[] getPoolsForPeptide(String peptideId) throws SQLException
     {
-        SimpleFilter sfilter = new SimpleFilter("peptide_id", Integer.parseInt(peptideId));
+        SimpleFilter sfilter = new SimpleFilter(FieldKey.fromParts("peptide_id"), Integer.parseInt(peptideId));
         TableInfo tInfo = PepDBSchema.getInstance().getTableInfoViewPoolPeptides();
         PeptidePool[] pools = Table.select(tInfo,Table.ALL_COLUMNS,sfilter,null,PeptidePool.class);
         if (pools == null || pools.length < 1)
@@ -359,8 +360,8 @@ public class PepDBManager
     public static Source getSource(Integer peptideId, Integer groupId) throws SQLException
     {
         TableInfo tInfo = PepDBSchema.getInstance().getTableInfoSource();
-        SimpleFilter sFilter = new SimpleFilter("peptide_group_id",groupId);
-        sFilter.addCondition("peptide_id",peptideId);
+        SimpleFilter sFilter = new SimpleFilter(FieldKey.fromParts("peptide_group_id"), groupId);
+        sFilter.addCondition(FieldKey.fromParts("peptide_id"), peptideId);
         Source dbSrc ;
         Source[] dbSrcs = Table.select(tInfo,tInfo.getColumns(),sFilter,null,Source.class);
         if(dbSrcs != null && dbSrcs.length>0)
@@ -372,7 +373,7 @@ public class PepDBManager
 
     public static PeptidePool[] getChildrenPools(String peptidePoolId) throws SQLException
     {
-         SimpleFilter sfilter = new SimpleFilter("parent_pool_id", Integer.parseInt(peptidePoolId));
+        SimpleFilter sfilter = new SimpleFilter(FieldKey.fromParts("parent_pool_id"), Integer.parseInt(peptidePoolId));
         TableInfo tInfo = PepDBSchema.getInstance().getTableInfoViewPoolDetails();
         PeptidePool[] pools = Table.select(tInfo,Table.ALL_COLUMNS,sfilter,null,PeptidePool.class);
         if (pools == null || pools.length < 1)
@@ -382,7 +383,7 @@ public class PepDBManager
 
     public static Integer[] getPeptidesInPool(Integer peptidePoolId) throws SQLException
     {
-        SimpleFilter sfilter = new SimpleFilter("peptide_pool_id", peptidePoolId);
+        SimpleFilter sfilter = new SimpleFilter(FieldKey.fromParts("peptide_pool_id"), peptidePoolId);
         TableInfo tInfo = PepDBSchema.getInstance().getTableInfoPoolAssignment();
         Integer[] peptideIds = Table.executeArray(tInfo,"peptide_id",sfilter,null,Integer.class);
         if (peptideIds == null || peptideIds.length < 1)
