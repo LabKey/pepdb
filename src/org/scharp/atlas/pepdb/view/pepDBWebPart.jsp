@@ -8,4 +8,4 @@
     PeptideGroup[] peptides = (PeptideGroup[]) context.get("peptides");
 %>
 This container contains <%= peptides.length %> peptide groups.<br>
-<%= generateButton("View Grid", new ActionURL("PepDB", "showAllPeptideGroups", context.getContainer())) %>
+<%= button("View Grid").href(new ActionURL("PepDB", "showAllPeptideGroups", context.getContainer())) %>

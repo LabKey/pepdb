@@ -36,7 +36,7 @@
                 </td>
             </tr>
         </table>
-        <%= generateSubmitButton("Import Peptide Pools") %>&nbsp;<%= generateButton("Back", "begin.view") %>
+        <%= button("Import Peptide Pools").submit(true) %>&nbsp;<%= button("Back").href("begin.view") %>
         <br>
         <h5 style="color:orangered;">
             Note: The File must be .txt extension and It should be tab delimited.<br><br>

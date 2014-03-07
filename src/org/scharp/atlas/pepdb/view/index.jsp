@@ -34,7 +34,7 @@
     PepDBController.DisplayPeptideForm form = (PepDBController.DisplayPeptideForm) (HttpView.currentModel());
 %>
 <form action="displayPeptide.view" method="get">
-Lookup Peptide by Id: <input type="text" name="peptide_id" size="10" value="<%=form.getPeptide_id()== null ?"":form.getPeptide_id()%>"/> &nbsp; <%= generateSubmitButton("Find") %>
+Lookup Peptide by Id: <input type="text" name="peptide_id" size="10" value="<%=form.getPeptide_id()== null ?"":form.getPeptide_id()%>"/> &nbsp; <%= button("Find").submit(true) %>
 </form>
 <p>
 <h3 style="color:blue;font:italic">Peptide Pools :</h3>
