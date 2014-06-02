@@ -1,11 +1,14 @@
 package org.scharp.atlas.pepdb;
 
+import org.jetbrains.annotations.NotNull;
 import org.labkey.api.data.ContainerManager.ContainerListener;
 import org.labkey.api.data.Container;
 import org.labkey.api.security.User;
 import org.apache.log4j.Logger;
 
 import java.beans.PropertyChangeEvent;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Created by IntelliJ IDEA.
@@ -31,7 +34,14 @@ public class PepDBContainerListener implements ContainerListener
     public void containerMoved(Container c, Container oldParent, User user)
     {
     }
-    
+
+    @NotNull
+    @Override
+    public Collection<String> canMove(Container c, Container newParent, User user)
+    {
+        return Collections.emptyList();
+    }
+
     public void propertyChange(PropertyChangeEvent evt)
        {
        }    
