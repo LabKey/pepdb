@@ -22,7 +22,7 @@
     }
 </script>
 <labkey:errors/>
-<form name="PeptideQueryForm" action="searchForPeptides.post" method="post">
+<labkey:form name="PeptideQueryForm" action="searchForPeptides.post" method="post">
     <h3 align="left" style="color:blue">Search for Peptides using different criteria : </h3><br><br>
     <table>
         <tr>
@@ -130,4 +130,4 @@
             </td>
         </tr>
     </table>
-</form>
+</labkey:form>

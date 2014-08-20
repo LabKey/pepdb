@@ -11,7 +11,7 @@
         PepDBController.FileForm bean = me.getModelBean();
     %>
     <labkey:errors/>
-    <form name="FileForm" action="importPeptides.post" method="POST" enctype="multipart/form-data">
+    <labkey:form name="FileForm" action="importPeptides.post" method="POST" enctype="multipart/form-data">
         <table class="normal">
             <tr>
                 <td colspan="3">
@@ -44,5 +44,5 @@
         <h5 style="color:orangered;">
             Note: The File must be .txt extension and It should be tab delimited.<br><br>
         </h5>
-    </form>
+    </labkey:form>
 </div>
