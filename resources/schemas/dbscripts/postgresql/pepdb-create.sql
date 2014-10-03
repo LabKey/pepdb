@@ -9,3 +9,62 @@ CREATE VIEW pepdb.pool_details AS
 
 CREATE VIEW pepdb.pool_peptides AS
     SELECT src.peptide_pool_assignment_id, src.peptide_id, src.peptide_pool_id, p.peptide_sequence, p.protein_cat_id, pg.peptide_group_id, pg.peptide_id_in_group, p.sequence_length, p.amino_acid_start_pos, p.amino_acid_end_pos, p.child, p.parent, p.peptide_flag, p.peptide_notes, pp.pool_type_id, pp.peptide_pool_name, pt.pool_type_desc, pp.archived FROM ((pepdb.peptide_pool_assignment src LEFT JOIN (pepdb.peptide_pool pp LEFT JOIN pepdb.pool_type pt ON ((pp.pool_type_id = pt.pool_type_id))) ON ((src.peptide_pool_id = pp.peptide_pool_id))) LEFT JOIN pepdb.peptide_group_assignment pg ON ((src.peptide_group_assignment_id = pg.peptide_group_assignment_id))), pepdb.peptides p WHERE (src.peptide_id = p.peptide_id);
+
+CREATE VIEW pepdb.peptideGroupRollup AS
+    SELECT
+      pg.created,
+      pg.createdBy,
+      pg.modified,
+      pg.modifiedBy,
+      pg.peptide_group_id,
+      pg.peptide_group_name AS name,
+      seq_ref,
+      p.pathogen_desc AS Pathogen,
+      c.clade_desc AS Clade,
+      gt.group_type_desc AS GroupType,
+      ar.pep_align_ref_desc AS AlignRef
+    FROM pepdb.peptide_group pg
+      LEFT JOIN pepdb.pathogen p ON pg.pathogen_id = p.pathogen_id
+      LEFT JOIN pepdb.clade c ON pg.clade_id = c.clade_id
+      LEFT JOIN pepdb.group_type gt ON pg.group_type_id = gt.group_type_id
+      LEFT JOIN pepdb.pep_align_ref ar ON pg.pep_align_ref_id = ar.pep_align_ref_id;
+
+CREATE VIEW pepdb.peptidePoolRollup AS
+    SELECT
+      pp.created,
+      pp.createdBy,
+      pp.modified,
+      pp.modifiedBy,
+      pp.peptide_pool_id,
+      pp.peptide_pool_name AS Name,
+      comment,
+      pt.pool_type_desc AS PoolType,
+      archived,
+      parent_pool_id,
+      matrix_peptide_pool_id
+    FROM pepdb.peptide_pool pp
+      JOIN pepdb.pool_type pt ON pp.pool_type_id = pt.pool_type_id;
+
+CREATE VIEW pepdb.peptideRollup AS
+    SELECT
+      p.created,
+      p.createdBy,
+      p.modified,
+      p.modifiedBy,
+      p.peptide_id,
+      peptide_sequence,
+      protein_cat_desc AS ProteinCategory,
+      amino_acid_start_pos,
+      amino_acid_end_pos,
+      sequence_length,
+      child,
+      parent,
+      src_file_name,
+      storage_location,
+      optimal_epitope_list_desc AS OptimalEpitopeList,
+      hla_restriction,
+      peptide_flag,
+      peptide_notes
+    FROM pepdb.peptides p
+      LEFT JOIN pepdb.protein_category pc ON p.protein_cat_id = pc.protein_cat_id
+      LEFT JOIN pepdb.optimal_epitope_list el ON p.optimal_epitope_list_id = el.optimal_epitope_list_id;

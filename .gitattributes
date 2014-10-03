@@ -37,6 +37,7 @@ src/org/scharp/atlas/pepdb/model/Peptides.java -text
 src/org/scharp/atlas/pepdb/model/PoolType.java -text
 src/org/scharp/atlas/pepdb/model/ProteinCategory.java -text
 src/org/scharp/atlas/pepdb/model/Source.java -text
+src/org/scharp/atlas/pepdb/query/PepDBQuerySchema.java -text
 src/org/scharp/atlas/pepdb/view/PepDBWebPart.java -text
 src/org/scharp/atlas/pepdb/view/importPeptides.jsp -text
 src/org/scharp/atlas/pepdb/view/importPools.jsp -text

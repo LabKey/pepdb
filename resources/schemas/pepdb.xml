@@ -587,4 +587,58 @@
             <ns:column columnName="pool_type_desc"/>
         </ns:columns>
     </ns:table>
+    <ns:table tableName="peptideGroupRollup" tableDbType="VIEW" hidden="true">
+        <ns:columns>
+            <ns:column columnName="created"/>
+            <ns:column columnName="createdBy"/>
+            <ns:column columnName="modified"/>
+            <ns:column columnName="modifiedBy"/>
+            <ns:column columnName="peptide_group_id"/>
+            <ns:column columnName="name"/>
+            <ns:column columnName="seq_ref"/>
+            <ns:column columnName="pathogen"/>
+            <ns:column columnName="clade"/>
+            <ns:column columnName="groupType"/>
+            <ns:column columnName="alignRef"/>
+        </ns:columns>
+    </ns:table>
+    <ns:table tableName="peptidePoolRollup" tableDbType="VIEW" hidden="true">
+        <ns:columns>
+            <ns:column columnName="created"/>
+            <ns:column columnName="createdBy"/>
+            <ns:column columnName="modified"/>
+            <ns:column columnName="modifiedBy"/>
+            <ns:column columnName="peptide_pool_id"/>
+            <ns:column columnName="name"/>
+            <ns:column columnName="comment"/>
+            <ns:column columnName="poolType"/>
+            <ns:column columnName="archived"/>
+            <ns:column columnName="parent_pool_id"/>
+            <ns:column columnName="matrix_peptide_pool_id"/>
+        </ns:columns>
+    </ns:table>
+    <ns:table tableName="peptideRollup" tableDbType="VIEW" hidden="true">
+        <ns:columns>
+            <ns:column columnName="created"/>
+            <ns:column columnName="createdBy"/>
+            <ns:column columnName="modified"/>
+            <ns:column columnName="modifiedBy"/>
+            <ns:column columnName="peptide_id"/>
+            <ns:column columnName="peptide_sequence"/>
+            <ns:column columnName="proteinCategory"/>
+            <ns:column columnName="amino_acid_start_pos"/>
+            <ns:column columnName="amino_acid_end_pos"/>
+            <ns:column columnName="sequence_length"/>
+
+            <ns:column columnName="child"/>
+            <ns:column columnName="parent"/>
+            <ns:column columnName="src_file_name"/>
+            <ns:column columnName="storage_location"/>
+            <ns:column columnName="optimalEpitopeList"/>
+            <ns:column columnName="hla_restriction"/>
+            <ns:column columnName="peptide_flag"/>
+            <ns:column columnName="peptide_notes"/>
+        </ns:columns>
+    </ns:table>
 </ns:tables>
+
