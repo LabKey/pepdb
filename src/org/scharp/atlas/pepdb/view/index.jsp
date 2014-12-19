@@ -1,8 +1,8 @@
 <%@ taglib prefix="labkey" uri="http://www.labkey.org/taglib" %>
-<%@ page import="org.labkey.api.view.ViewContext"%>
-<%@ page import="org.labkey.api.security.User" %>
-<%@ page import="org.labkey.api.security.ACL" %>
+<%@ page import="org.labkey.api.security.User"%>
+<%@ page import="org.labkey.api.security.permissions.UpdatePermission" %>
 <%@ page import="org.labkey.api.view.HttpView" %>
+<%@ page import="org.labkey.api.view.ViewContext" %>
 <%@ page import="org.scharp.atlas.pepdb.PepDBController" %>
 <%@ page extends="org.labkey.api.jsp.JspBase" %>
 
@@ -13,7 +13,7 @@
 <h3 style="color:blue;font:italic">Peptide Groups : </h3>
 <ul>
 	<li><a href="showAllPeptideGroups.view">List Peptide Groups</a></li>
-    <%if(ctx.getContainer().hasPermission(user, ACL.PERM_UPDATE)){%>
+    <%if(ctx.getContainer().hasPermission(user, UpdatePermission.class)){%>
     <li><a href="insertPeptideGroup.view">Insert a New Group</a></li>
     <%}else{%>
     <li>Insert a New Group</li>
@@ -22,7 +22,7 @@
 <h3 style="color:blue;font:italic">Peptides : </h3>
 <ul>
 	<li><a href="searchForPeptides.view">Search for Peptides by Criteria</a></li>
-    <%if(ctx.getContainer().hasPermission(user, ACL.PERM_UPDATE)){%>
+    <%if(ctx.getContainer().hasPermission(user, UpdatePermission.class)){%>
     <li><a href="importPeptides.view">Import Peptides</a></li>
     <%}else{%>
     <li>Import Peptides</li>
@@ -39,7 +39,7 @@ Lookup Peptide by Id: <input type="text" name="peptide_id" size="10" value="<%=f
 <p>
 <h3 style="color:blue;font:italic">Peptide Pools :</h3>
 <ul>
-    <%if(ctx.getContainer().hasPermission(user, ACL.PERM_UPDATE)){%>
+    <%if(ctx.getContainer().hasPermission(user, UpdatePermission.class)){%>
     <li><a href="importPeptidePools.view">Import Peptide Pools</a> </li>
     <%}else{%>
     <li>Import Peptide Pools</li>
