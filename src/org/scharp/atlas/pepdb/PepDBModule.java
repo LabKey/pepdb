@@ -1,6 +1,7 @@
 package org.scharp.atlas.pepdb;
 
 import org.apache.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 import org.labkey.api.data.Container;
 import org.labkey.api.data.ContainerManager;
 import org.labkey.api.data.DbSchema;
@@ -15,7 +16,6 @@ import org.labkey.api.view.WebPartView;
 import org.scharp.atlas.pepdb.query.PepDBQuerySchema;
 import org.scharp.atlas.pepdb.view.PepDBWebPart;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -50,7 +50,7 @@ public class PepDBModule extends DefaultModule
                     addLegacyNames("Narrow PepDB Summary");
                 }
 
-                public WebPartView getWebPartView(ViewContext portalCtx, Portal.WebPart webPart) throws IllegalAccessException, InvocationTargetException
+                public WebPartView getWebPartView(@NotNull ViewContext portalCtx, @NotNull Portal.WebPart webPart)
                 {
                     return new PepDBWebPart();
                 }
