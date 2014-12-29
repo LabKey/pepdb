@@ -45,13 +45,7 @@ public class PepDBModule extends DefaultModule
 
     protected Collection<WebPartFactory> createWebPartFactories()
     {
-        return new ArrayList<WebPartFactory>(Arrays.asList(new BaseWebPartFactory("PepDB Summary") {
-                public WebPartView getWebPartView(ViewContext portalCtx, Portal.WebPart webPart) throws IllegalAccessException, InvocationTargetException
-                {
-                    return new PepDBWebPart();
-                }
-            },
-            new BaseWebPartFactory("PepDB Summary", WebPartFactory.LOCATION_RIGHT) {
+        return new ArrayList<WebPartFactory>(Arrays.asList(new BaseWebPartFactory("PepDB Summary", WebPartFactory.LOCATION_BODY, WebPartFactory.LOCATION_RIGHT) {
                 {
                     addLegacyNames("Narrow PepDB Summary");
                 }
