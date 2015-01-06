@@ -50,12 +50,8 @@
                 <input type="text" size="30" name="queryValue"/>
                 <%}
                 else if(bean.getQueryKey().equals(PepDBSchema.COLUMN_PEPTIDE_GROUP_ID)){
-                    PeptideGroup[] peptideGroups = new PeptideGroup[0];
-                    try {
-                        peptideGroups = PepDBManager.getPeptideGroups();
-                    } catch (SQLException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                    }%>
+                    PeptideGroup[] peptideGroups = PepDBManager.getPeptideGroups();
+                %>
                 <select id="queryValue" name="queryValue">
                     <option value=""></option>
                     <% for(PeptideGroup pepGroup : peptideGroups) { %>
@@ -63,12 +59,8 @@
                     <% } %> </select>
                 <% }
                 else if (bean.getQueryKey().equals(PepDBSchema.COLUMN_PEPTIDE_POOL_ID)) {
-                    PeptidePool[] peptidePools = new PeptidePool[0];
-                    try {
-                        peptidePools = PepDBManager.getPeptidePools();
-                    } catch (SQLException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                    } %>
+                    PeptidePool[] peptidePools = PepDBManager.getPeptidePools();
+                %>
                 <select id="queryValue" name="queryValue">
                     <option value=""></option>
                     <%for (PeptidePool pepPool : peptidePools) { %>
@@ -77,12 +69,8 @@
                 </select>
                 <% }
                 else if (bean.getQueryKey().equals(PepDBSchema.COLUMN_PROTEIN_CAT_ID)) {
-                    ProteinCategory[] proteinCategories = new ProteinCategory[0];
-                    try {
-                        proteinCategories = PepDBManager.getProteinCategory();
-                    } catch (SQLException e) {
-                        e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                    } %>
+                    ProteinCategory[] proteinCategories = PepDBManager.getProteinCategory();
+                %>
                 <select id="queryValue" name="queryValue">
                     <option value=""></option>
                     <%for (ProteinCategory proCat : proteinCategories) { %>
