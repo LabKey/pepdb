@@ -43,6 +43,7 @@ public class PepDBModule extends DefaultModule
         PepDBQuerySchema.register(this);
     }
 
+    @NotNull
     protected Collection<WebPartFactory> createWebPartFactories()
     {
         return new ArrayList<WebPartFactory>(Arrays.asList(new BaseWebPartFactory("PepDB Summary", WebPartFactory.LOCATION_BODY, WebPartFactory.LOCATION_RIGHT) {
@@ -62,6 +63,7 @@ public class PepDBModule extends DefaultModule
         return true;
     }
 
+    @NotNull
     public Collection<String> getSummary(Container c)
     {
         return Collections.emptyList();
@@ -72,10 +74,13 @@ public class PepDBModule extends DefaultModule
         // add a container listener so we'll know when our container is deleted:
         ContainerManager.addContainerListener(new PepDBContainerListener());
     }
+    @NotNull
     public Set<String> getSchemaNames()
     {
         return PageFlowUtil.set(PepDBSchema.getInstance().getSchemaName());
     }
+
+    @NotNull
     public Set<DbSchema> getSchemasToTest()
     {
         return PageFlowUtil.set(PepDBSchema.getInstance().getSchema());
