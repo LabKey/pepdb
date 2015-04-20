@@ -43,8 +43,11 @@ public class PepDBQuerySchema extends SimpleUserSchema
     {
         TableInfo table = super.createWrappedTable(name, sourceTable);
         if (table instanceof SimpleTable)
-            ((SimpleTable)table).setReadOnly(true);
-
+        {
+            // Setting readOnly to false so that tests can reset the data tables via Remote API commands. S. Langley.
+            ((SimpleTable) table).setReadOnly(false);
+            //((SimpleTable)table).setReadOnly(true);
+        }
         return table;
     }
 }

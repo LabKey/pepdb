@@ -14,6 +14,7 @@ resources/schemas/dbscripts/postgresql/pepdb-1.75-2.00.sql -text
 resources/schemas/dbscripts/postgresql/pepdb-2.00-2.10.sql -text
 resources/schemas/dbscripts/postgresql/pepdb-2.10-2.20.sql -text
 resources/schemas/dbscripts/postgresql/pepdb-2.20-2.21.sql -text
+resources/schemas/dbscripts/postgresql/pepdb-2.21-2.22.sql -text
 resources/schemas/dbscripts/postgresql/pepdb-create.sql -text
 resources/schemas/dbscripts/postgresql/pepdb-drop.sql -text
 resources/schemas/dbscripts/sqlserver/pepdb-0.00-0.01.sql -text
@@ -45,3 +46,7 @@ src/org/scharp/atlas/pepdb/view/index.jsp -text
 src/org/scharp/atlas/pepdb/view/pepDBWebPart.jsp -text
 src/org/scharp/atlas/pepdb/view/peptideDetails.jsp -text
 src/org/scharp/atlas/pepdb/view/peptideGroupSelect.jsp -text
+test/sampledata/test_import_files/peptide_file/gagptegprac.txt -text
+test/sampledata/test_import_files/peptide_file/gagptegprac1.txt -text
+test/sampledata/test_import_files/pool_description_file/pool_description.txt -text
+test/sampledata/test_import_files/pool_detail_file/pool_details.txt -text
