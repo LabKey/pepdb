@@ -483,7 +483,7 @@ public class PepDBBaseController extends SpringActionController
 
         public Class getValueClass()
         {
-            return String.class;
+            return Integer.class;
         }
 
         public Class getDisplayValueClass()
@@ -554,7 +554,7 @@ public class PepDBBaseController extends SpringActionController
 
         public Class getValueClass()
         {
-            return String.class;
+            return Integer.class;
         }
 
         public Class getDisplayValueClass()
@@ -625,7 +625,7 @@ public class PepDBBaseController extends SpringActionController
 
         public Class getValueClass()
         {
-            return String.class;
+            return Integer.class;
         }
 
         public Class getDisplayValueClass()
