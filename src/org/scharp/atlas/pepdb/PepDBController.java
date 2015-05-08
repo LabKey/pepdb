@@ -740,6 +740,7 @@ public class PepDBController extends PepDBBaseController
 
         public ActionURL getSuccessURL(FileForm form)
         {
+            ActionURL url = new ActionURL(ImportPeptidePoolsAction.class, getContainer());
             url.addParameter("message", "The file has been successfully imported.");
             return url;
         }
