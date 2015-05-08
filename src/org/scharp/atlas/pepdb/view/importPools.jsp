@@ -10,6 +10,11 @@
         JspView<PepDBController.FileForm> me = (JspView<PepDBController.FileForm>) HttpView.currentView();
         PepDBController.FileForm bean = me.getModelBean();
     %>
+
+    <% if(null != bean.getMessage()) {%>
+        <span style="color: green; font-size: 14px; font-weight:bold"><%=bean.getMessage() %></span>
+    <%}%>
+
     <labkey:errors/>
     <labkey:form name="FileForm" action="importPeptidePools.post" method="POST" enctype="multipart/form-data">
         <table class="normal">
