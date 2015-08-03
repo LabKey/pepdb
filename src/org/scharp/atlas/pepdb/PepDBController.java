@@ -1,6 +1,7 @@
 package org.scharp.atlas.pepdb;
 
 import org.labkey.api.action.*;
+import org.labkey.api.security.RequiresPermission;
 import org.labkey.api.view.*;
 import org.labkey.api.data.*;
 import org.labkey.api.query.FieldKey;
@@ -560,7 +561,7 @@ public class PepDBController extends PepDBBaseController
         }
     }
 
-    @RequiresPermissionClass(UpdatePermission.class)
+    @RequiresPermission(UpdatePermission.class)
     public class InsertPeptideGroupAction extends FormViewAction<PeptideGroupForm>
     {
         public ModelAndView getView(PeptideGroupForm form, boolean reshow, BindException errors) throws Exception
@@ -586,6 +587,7 @@ public class PepDBController extends PepDBBaseController
         {
             PeptideGroup group = form.getBean();
             group = PepDBManager.insertGroup(getContainer(), getUser(), group);
+            group.setContainerId(getContainer().getId());
             form.setBean(group);
             return true;
         }
