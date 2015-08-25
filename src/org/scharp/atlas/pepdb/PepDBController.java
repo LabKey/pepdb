@@ -5,7 +5,7 @@ import org.labkey.api.security.RequiresPermission;
 import org.labkey.api.view.*;
 import org.labkey.api.data.*;
 import org.labkey.api.query.FieldKey;
-import org.labkey.api.security.RequiresPermissionClass;
+import org.labkey.api.security.RequiresPermission;
 import org.labkey.api.security.permissions.ReadPermission;
 import org.labkey.api.security.permissions.UpdatePermission;
 import org.labkey.api.attachments.AttachmentFile;
@@ -65,7 +65,7 @@ public class PepDBController extends PepDBBaseController
         return getViewContext().getResponse();
     }
 
-    @RequiresPermissionClass(ReadPermission.class)
+    @RequiresPermission(ReadPermission.class)
     public class BeginAction extends SimpleViewAction<DisplayPeptideForm>
     {
         public ModelAndView getView(DisplayPeptideForm form, BindException errors) throws Exception
@@ -80,7 +80,7 @@ public class PepDBController extends PepDBBaseController
         }
     }
 
-    @RequiresPermissionClass(ReadPermission.class)
+    @RequiresPermission(ReadPermission.class)
     public class SearchForPeptidesAction extends FormViewAction<PeptideQueryForm>
     {
         public ModelAndView getView(PeptideQueryForm form, boolean reshow, BindException errors) throws Exception
@@ -134,7 +134,7 @@ public class PepDBController extends PepDBBaseController
         }
     }
 
-    @RequiresPermissionClass(ReadPermission.class)
+    @RequiresPermission(ReadPermission.class)
     public class GetPeptidesAction extends SimpleViewAction<PeptideQueryForm>
     {
         public ModelAndView getView(PeptideQueryForm form, BindException errors) throws Exception
@@ -186,7 +186,7 @@ public class PepDBController extends PepDBBaseController
         }
     }
 
-    @RequiresPermissionClass(ReadPermission.class)
+    @RequiresPermission(ReadPermission.class)
     public class DisplayPeptideAction extends SimpleViewAction<DisplayPeptideForm>
     {
         public ModelAndView getView(DisplayPeptideForm form, BindException errors) throws Exception
@@ -246,7 +246,7 @@ public class PepDBController extends PepDBBaseController
         }
     }
 
-    @RequiresPermissionClass(UpdatePermission.class)
+    @RequiresPermission(UpdatePermission.class)
     public class EditPeptideAction extends FormViewAction<PeptideForm>
     {
         public ModelAndView getView(PeptideForm form, boolean reshow, BindException errors) throws Exception
@@ -306,7 +306,7 @@ public class PepDBController extends PepDBBaseController
         }
     }
 
-    @RequiresPermissionClass(UpdatePermission.class)
+    @RequiresPermission(UpdatePermission.class)
     public class EditPeptidePoolAction extends FormViewAction<PeptidePoolForm>
     {
         public ModelAndView getView(PeptidePoolForm form, boolean reshow, BindException errors) throws Exception
@@ -354,7 +354,7 @@ public class PepDBController extends PepDBBaseController
         }
     }
 
-    @RequiresPermissionClass(ReadPermission.class)
+    @RequiresPermission(ReadPermission.class)
     public class ShowAllPeptideGroupsAction extends SimpleViewAction<PeptideQueryForm>
     {
         public ModelAndView getView(PeptideQueryForm form, BindException errors) throws Exception
@@ -387,7 +387,7 @@ public class PepDBController extends PepDBBaseController
         }
     }
 
-    @RequiresPermissionClass(ReadPermission.class)
+    @RequiresPermission(ReadPermission.class)
     public class DisplayPeptideGroupInformationAction extends SimpleViewAction<PeptideAndGroupForm>
     {
         public ModelAndView getView(PeptideAndGroupForm form, BindException errors) throws Exception
@@ -427,7 +427,7 @@ public class PepDBController extends PepDBBaseController
         }
     }
 
-    @RequiresPermissionClass(ReadPermission.class)
+    @RequiresPermission(ReadPermission.class)
     public class ShowAllPeptidePoolsAction extends SimpleViewAction<PeptideQueryForm>
     {
         public ModelAndView getView(PeptideQueryForm form, BindException errors) throws Exception
@@ -456,7 +456,7 @@ public class PepDBController extends PepDBBaseController
         }
     }
 
-    @RequiresPermissionClass(ReadPermission.class)
+    @RequiresPermission(ReadPermission.class)
     public class DisplayPeptidePoolInformationAction extends SimpleViewAction<PeptideAndPoolForm>
     {
         public ModelAndView getView(PeptideAndPoolForm form, BindException errors) throws Exception
@@ -503,7 +503,7 @@ public class PepDBController extends PepDBBaseController
         }
     }
 
-    @RequiresPermissionClass(UpdatePermission.class)
+    @RequiresPermission(UpdatePermission.class)
     public class UpdatePeptideGroupAction extends FormViewAction<PeptideGroupForm>
     {
         public ModelAndView getView(PeptideGroupForm form, boolean reshow, BindException errors) throws Exception
@@ -618,7 +618,7 @@ public class PepDBController extends PepDBBaseController
         }
     }
 
-    @RequiresPermissionClass(UpdatePermission.class)
+    @RequiresPermission(UpdatePermission.class)
     public class ImportPeptidesAction extends FormViewAction<FileForm>
     {
         private List<Peptides> resultPeptides = new LinkedList<Peptides>();
@@ -678,7 +678,7 @@ public class PepDBController extends PepDBBaseController
         }
     }
 
-    @RequiresPermissionClass(UpdatePermission.class)
+    @RequiresPermission(UpdatePermission.class)
     public class DisplayResultAction extends SimpleViewAction<FileForm>
     {
         public ModelAndView getView(FileForm form, BindException errors) throws Exception
@@ -695,7 +695,7 @@ public class PepDBController extends PepDBBaseController
         }
     }
 
-    @RequiresPermissionClass(UpdatePermission.class)
+    @RequiresPermission(UpdatePermission.class)
     public class ImportPeptidePoolsAction extends FormViewAction<FileForm>
     {
         ActionURL url = null;
@@ -754,7 +754,7 @@ public class PepDBController extends PepDBBaseController
     }
 
 
-    @RequiresPermissionClass(ReadPermission.class)
+    @RequiresPermission(ReadPermission.class)
     public abstract class PeptideExcelExportAction extends ExportAction
     {
         public void printExcel(Object bean, HttpServletResponse response, BindException errors, PeptideQueryForm form) throws Exception
@@ -788,7 +788,7 @@ public class PepDBController extends PepDBBaseController
         }
     }
 
-    @RequiresPermissionClass(ReadPermission.class)
+    @RequiresPermission(ReadPermission.class)
     public class PeptidesInPoolExcelExportAction extends PeptideExcelExportAction
     {
         public void export(Object bean, HttpServletResponse response, BindException errors) throws Exception
@@ -801,7 +801,7 @@ public class PepDBController extends PepDBBaseController
         }
     }
 
-    @RequiresPermissionClass(ReadPermission.class)
+    @RequiresPermission(ReadPermission.class)
     public class PoolsInPoolExcelExportAction extends PeptideExcelExportAction
     {
         public void export(Object bean, HttpServletResponse response, BindException errors) throws Exception
@@ -814,7 +814,7 @@ public class PepDBController extends PepDBBaseController
         }
     }
 
-    @RequiresPermissionClass(ReadPermission.class)
+    @RequiresPermission(ReadPermission.class)
     public class PeptideDefaultExcelExportAction extends PeptideExcelExportAction
     {
         public void export(Object bean, HttpServletResponse response, BindException errors) throws Exception
@@ -829,7 +829,7 @@ public class PepDBController extends PepDBBaseController
 
 
 
-    @RequiresPermissionClass(ReadPermission.class)
+    @RequiresPermission(ReadPermission.class)
     public abstract class PeptideTextExportAction extends ExportAction
     {
         public void printText(Object bean, HttpServletResponse response, BindException errors, PeptideQueryForm form) throws Exception
@@ -859,7 +859,7 @@ public class PepDBController extends PepDBBaseController
             }
         }
     }
-    @RequiresPermissionClass(ReadPermission.class)
+    @RequiresPermission(ReadPermission.class)
     public class PeptidesInPoolTextExportAction extends PeptideTextExportAction
     {
         public void export(Object bean, HttpServletResponse response, BindException errors) throws Exception
@@ -872,7 +872,7 @@ public class PepDBController extends PepDBBaseController
         }
     }
 
-    @RequiresPermissionClass(ReadPermission.class)
+    @RequiresPermission(ReadPermission.class)
     public class PoolsInPoolTextExportAction extends PeptideTextExportAction
     {
         public void export(Object bean, HttpServletResponse response, BindException errors) throws Exception
@@ -885,7 +885,7 @@ public class PepDBController extends PepDBBaseController
         }
     }
 
-    @RequiresPermissionClass(ReadPermission.class)
+    @RequiresPermission(ReadPermission.class)
     public class PeptideDefaultTextExportAction extends PeptideTextExportAction
     {
         public void export(Object bean, HttpServletResponse response, BindException errors) throws Exception
