@@ -1020,9 +1020,10 @@ public class PepDBController extends PepDBBaseController
             sequence = sequence.trim().toUpperCase();
             sFilter.addWhereClause(PepDBSchema.COLUMN_PEPTIDE_SEQUENCE + " LIKE ?", new Object[]{"%" + sequence + "%"},
                     FieldKey.fromString(PepDBSchema.COLUMN_PEPTIDE_SEQUENCE));
+            form.setFilter(sFilter);
         }
         Sort sort = new Sort(PepDBSchema.COLUMN_PEPTIDE_ID);
-        form.setFilter(sFilter);
+
         form.setCInfo(tableInfo.getColumns("peptide_id,peptide_sequence,protein_cat_id,peptide_group_name,peptide_id_in_group,pathogen_id," +
                 "sequence_length,amino_acid_start_pos,amino_acid_end_pos,child,parent,peptide_flag,peptide_notes,optimal_epitope_list_id,hla_restriction"));
         form.setSort(sort);
@@ -1037,9 +1038,9 @@ public class PepDBController extends PepDBBaseController
         DataRegion rgn = getDataRegion(getContainer(), form);
         rgn.setButtonBar(getGridButtonbar(pv), DataRegion.MODE_GRID);
         GridView gridView = new GridView(rgn, (BindException) null);
-        gridView.setFilter(sFilter);
         gridView.setSort(sort);
         if(!sequenceIsEmpty) {
+            gridView.setFilter(sFilter);
             gridView.setTitle(
                                "The Peptides Containing the Sequence string '" + sequence + "' are : ");
         }
