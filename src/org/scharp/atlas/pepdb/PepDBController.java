@@ -1009,27 +1009,44 @@ public class PepDBController extends PepDBBaseController
         form.setTInfo(tableInfo);
         _log.debug("Creating a Filter for peptideSequence." + PepDBSchema.COLUMN_PEPTIDE_SEQUENCE + ": " + form);
         SimpleFilter sFilter = new SimpleFilter();
-        sFilter.addWhereClause(PepDBSchema.COLUMN_PEPTIDE_SEQUENCE + " LIKE ?", new Object[]{"%" + (form.getQueryValue() == null || form.getQueryValue().length() == 0 ? "" : form.getQueryValue().toUpperCase()) + "%"},
-                FieldKey.fromString(PepDBSchema.COLUMN_PEPTIDE_SEQUENCE));
+
+        boolean sequenceIsEmpty = true;
+        String sequence = form.getQueryValue();
+        if((sequence != null) && (!sequence.trim().isEmpty())){
+            sequenceIsEmpty = false;
+        }
+        if(!sequenceIsEmpty)
+        {
+            sequence = sequence.trim().toUpperCase();
+            sFilter.addWhereClause(PepDBSchema.COLUMN_PEPTIDE_SEQUENCE + " LIKE ?", new Object[]{"%" + sequence + "%"},
+                    FieldKey.fromString(PepDBSchema.COLUMN_PEPTIDE_SEQUENCE));
+        }
         Sort sort = new Sort(PepDBSchema.COLUMN_PEPTIDE_ID);
         form.setFilter(sFilter);
         form.setCInfo(tableInfo.getColumns("peptide_id,peptide_sequence,protein_cat_id,peptide_group_name,peptide_id_in_group,pathogen_id," +
                 "sequence_length,amino_acid_start_pos,amino_acid_end_pos,child,parent,peptide_flag,peptide_notes,optimal_epitope_list_id,hla_restriction"));
         form.setSort(sort);
-        if (form.getQueryValue() != null && form.getQueryValue().length() != 0)
-            form.setMessage("Peptides_WITH_Sequence_" + form.getQueryValue());
+        if(!sequenceIsEmpty)
+        {
+            form.setMessage("Peptides_WITH_Sequence_" + sequence);
+        }
         else
+        {
             form.setMessage("All_Peptides_In_DB");
+        }
         DataRegion rgn = getDataRegion(getContainer(), form);
         rgn.setButtonBar(getGridButtonbar(pv), DataRegion.MODE_GRID);
         GridView gridView = new GridView(rgn, (BindException) null);
         gridView.setFilter(sFilter);
         gridView.setSort(sort);
-        if (form.getQueryValue() != null && form.getQueryValue().length() != 0)
+        if(!sequenceIsEmpty) {
             gridView.setTitle(
-                    "The Peptides Containing the Sequence string '" + form.getQueryValue() + "' are : ");
+                               "The Peptides Containing the Sequence string '" + sequence + "' are : ");
+        }
         else
+        {
             gridView.setTitle("All the Peptides in Peptide DB : ");
+        }
         return gridView;
     }
 

@@ -34,7 +34,7 @@ public class PepDBModule extends DefaultModule
 
     public double getVersion()
     {
-        return 2.23;
+        return 2.24;
     }
 
     protected void init()
