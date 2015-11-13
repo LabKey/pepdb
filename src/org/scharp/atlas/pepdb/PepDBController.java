@@ -5,7 +5,6 @@ import org.labkey.api.security.RequiresPermission;
 import org.labkey.api.view.*;
 import org.labkey.api.data.*;
 import org.labkey.api.query.FieldKey;
-import org.labkey.api.security.RequiresPermission;
 import org.labkey.api.security.permissions.ReadPermission;
 import org.labkey.api.security.permissions.UpdatePermission;
 import org.labkey.api.attachments.AttachmentFile;
@@ -43,6 +42,9 @@ public class PepDBController extends PepDBBaseController
     private static final String PAGE_INDEX = "index.jsp";
     private static final String PAGE_PEPTIDE_GROUP_SELECT = "peptideGroupSelect.jsp";
     private static final String PAGE_IMPORT_PEPTIDES = "importPeptides.jsp";
+
+    // Maximum number of rows to display on a web page at once.  Specifying Table.ALL_ROWS was causing a JavaScript timeout.
+    private static final int MAX_ROWS = 1000;
 
     public PepDBController()
     {
@@ -366,7 +368,7 @@ public class PepDBController extends PepDBBaseController
             form.setCInfo(columns);
             form.setSort(new Sort(PepDBSchema.COLUMN_PEPTIDE_GROUP_ID));
             form.setMessage("AllPeptideGroups");
-            DataRegion rgn = getDataRegion(getContainer(), form);
+            DataRegion rgn = getDataRegion(getContainer(), form, Table.ALL_ROWS);
             rgn.setButtonBar(getGridButtonbar(pv), DataRegion.MODE_GRID);
             ActionURL insertUrl = new ActionURL(InsertPeptideGroupAction.class, getContainer());
             ActionButton insert = new ActionButton(insertUrl, "Insert New Group");
@@ -439,7 +441,7 @@ public class PepDBController extends PepDBBaseController
             form.setCInfo(columns);
             form.setSort(new Sort(PepDBSchema.COLUMN_PEPTIDE_POOL_ID));
             form.setMessage("AllPeptidePools");
-            DataRegion rgn = getDataRegion(getContainer(), form);
+            DataRegion rgn = getDataRegion(getContainer(), form, Table.ALL_ROWS);
             rgn.setButtonBar(getGridButtonbar(pv), DataRegion.MODE_GRID);
             ActionURL importUrl = new ActionURL(ImportPeptidePoolsAction.class, getContainer());
             ActionButton importB = new ActionButton(importUrl, "Import New Pools");
@@ -467,7 +469,7 @@ public class PepDBController extends PepDBBaseController
             PropertyValues pv = this.getPropertyValues();
             queryform.setTInfo(tableInfo);
             queryform.setCInfo(tableInfo.getColumns("peptide_pool_id,peptide_pool_name,pool_type_id,parent_pool_id,matrix_peptide_pool_id,comment,archived,createdby,created,modifiedby,modified"));
-            DataRegion rgn = getDataRegion(getContainer(), queryform);
+            DataRegion rgn = getDataRegion(getContainer(), queryform, Table.ALL_ROWS);
             rgn.setShowBorders(true);
             rgn.setShadeAlternatingRows(true);
             ButtonBar buttonBar = getButtonBar();
@@ -577,7 +579,7 @@ public class PepDBController extends PepDBBaseController
             TableInfo tInfo = PepDBSchema.getInstance().getTableInfoPeptideGroups();
             qForm.setTInfo(tInfo);
             qForm.setCInfo(tInfo.getColumns());
-            DataRegion rgn = getDataRegion(getContainer(), qForm);
+            DataRegion rgn = getDataRegion(getContainer(), qForm, Table.ALL_ROWS);
             rgn.setButtonBar(bb);
             InsertView iView = new InsertView(rgn, form, errors);
             return iView;
@@ -762,7 +764,7 @@ public class PepDBController extends PepDBBaseController
             try
             {
                 RenderContext context = new RenderContext(getViewContext());
-                DataRegion rgn = getDataRegion(getContainer(), form);
+                DataRegion rgn = getDataRegion(getContainer(), form, Table.ALL_ROWS);
                 context.setBaseFilter(form.getFilter());
                 context.setBaseSort(form.getSort());
                 ExcelWriter ew = new ExcelWriter(rgn.getResultSet(context), rgn.getDisplayColumns());
@@ -838,7 +840,7 @@ public class PepDBController extends PepDBBaseController
             {
                 ViewContext ctx = getViewContext();
                 RenderContext context = new RenderContext(getViewContext());
-                DataRegion rgn = getDataRegion(getContainer(), form);
+                DataRegion rgn = getDataRegion(getContainer(), form, Table.ALL_ROWS);
                 context.setBaseFilter(form.getFilter());
                 context.setBaseSort(form.getSort());
                 TSVGridWriter tsv = new TSVGridWriter(rgn.getResultSet(context), rgn.getDisplayColumns());
@@ -914,7 +916,7 @@ public class PepDBController extends PepDBBaseController
 
         form.setSort(sort);
         form.setMessage("Peptides_IN_Last_File");
-        DataRegion rgn = getDataRegion(getContainer(), form);
+        DataRegion rgn = getDataRegion(getContainer(), form, Table.ALL_ROWS);
         rgn.setButtonBar(getGridButtonbar(pv), DataRegion.MODE_GRID);
         GridView gridView = new GridView(rgn, (BindException) null);
         gridView.setFilter(sFilter);
@@ -942,7 +944,7 @@ public class PepDBController extends PepDBBaseController
                     "sequence_length,amino_acid_start_pos,amino_acid_end_pos,child,parent,peptide_flag,peptide_notes,frequency_number,frequency_number_date"));
         form.setSort(sort);
         form.setMessage("Peptides_IN_Group_" + pg.getPeptide_group_name());
-        DataRegion rgn = getDataRegion(getContainer(), form);
+        DataRegion rgn = getDataRegion(getContainer(), form, Table.ALL_ROWS);
         rgn.setButtonBar(getGridButtonbar(pv), DataRegion.MODE_GRID);
         GridView gridView = new GridView(rgn, (BindException) null);
         gridView.setFilter(sFilter);
@@ -968,7 +970,7 @@ public class PepDBController extends PepDBBaseController
                 "peptide_group_id,peptide_id_in_group,sequence_length,amino_acid_start_pos,amino_acid_end_pos,child,parent,peptide_flag,peptide_notes"));
         form.setSort(sort);
         form.setMessage("Peptides_IN_Pool_PP" + pp.getPeptide_pool_name());
-        DataRegion rgn = getDataRegion(getContainer(), form);
+        DataRegion rgn = getDataRegion(getContainer(), form, Table.ALL_ROWS);
         ButtonBar bb = getGridButtonbar(pv);
         rgn.setButtonBar(bb, DataRegion.MODE_GRID);
         GridView gridView = new GridView(rgn, (BindException) null);
@@ -992,7 +994,7 @@ public class PepDBController extends PepDBBaseController
         form.setCInfo(tableInfo.getColumns("peptide_pool_id,peptide_pool_name,pool_type_desc,parent_pool_id,parent_pool_name,matrix_peptide_pool_id,comment,archived,createdby,created,modifiedby,modified"));
         form.setSort(sort);
         form.setMessage("Peptides_WITH_Parent_Pool_PP" + form.getQueryValue());
-        DataRegion rgn = getDataRegion(getContainer(), form);
+        DataRegion rgn = getDataRegion(getContainer(), form, Table.ALL_ROWS);
         rgn.setButtonBar(getGridButtonbar(pv), DataRegion.MODE_GRID);
         GridView gridView = new GridView(rgn, (BindException) null);
         gridView.setFilter(sFilter);
@@ -1035,7 +1037,7 @@ public class PepDBController extends PepDBBaseController
         {
             form.setMessage("All_Peptides_In_DB");
         }
-        DataRegion rgn = getDataRegion(getContainer(), form);
+        DataRegion rgn = getDataRegion(getContainer(), form, MAX_ROWS);
         rgn.setButtonBar(getGridButtonbar(pv), DataRegion.MODE_GRID);
         GridView gridView = new GridView(rgn, (BindException) null);
         gridView.setSort(sort);
@@ -1082,7 +1084,7 @@ public class PepDBController extends PepDBBaseController
                 "sequence_length,amino_acid_start_pos,amino_acid_end_pos,child,parent,peptide_flag,peptide_notes,optimal_epitope_list_id,hla_restriction"));
         form.setSort(sort);
         form.setMessage("Peptides_IN_Protein_" + form.getQueryValue());
-        DataRegion rgn = getDataRegion(getContainer(), form);
+        DataRegion rgn = getDataRegion(getContainer(), form, Table.ALL_ROWS);
         rgn.setButtonBar(getGridButtonbar(pv), DataRegion.MODE_GRID);
         GridView gridView = new GridView(rgn, (BindException) null);
         gridView.setFilter(sFilter);
@@ -1104,7 +1106,7 @@ public class PepDBController extends PepDBBaseController
                 "child_aastart,child_aaend,child_peptide_flag,child_peptide_notes,child_optimal_epitope_list_id,child_hla_restriction"));
         form.setSort(sort);
         form.setMessage("CHILD_Peptides_WITH_Parent_P" + form.getQueryValue());
-        DataRegion rgn = getDataRegion(getContainer(), form);
+        DataRegion rgn = getDataRegion(getContainer(), form, Table.ALL_ROWS);
         rgn.setButtonBar(getGridButtonbar(pv), DataRegion.MODE_GRID);
         GridView gridView = new GridView(rgn, (BindException) null);
         gridView.setFilter(sFilter);
@@ -1127,7 +1129,7 @@ public class PepDBController extends PepDBBaseController
                 "child_aastart,child_aaend,child_peptide_flag,child_peptide_notes,child_optimal_epitope_list_id,child_hla_restriction"));
         form.setSort(sort);
         form.setMessage("CHILD_Peptides_WITH_Parent_Sequence_" + form.getQueryValue());
-        DataRegion rgn = getDataRegion(getContainer(), form);
+        DataRegion rgn = getDataRegion(getContainer(), form, Table.ALL_ROWS);
         rgn.setButtonBar(getGridButtonbar(pv), DataRegion.MODE_GRID);
         GridView gridView = new GridView(rgn, (BindException) null);
         gridView.setFilter(sFilter);
@@ -1150,7 +1152,7 @@ public class PepDBController extends PepDBBaseController
                 "parent_seq_length,parent_aastart,parent_aaend,parent_peptide_flag,parent_peptide_notes"));
         form.setSort(sort);
         form.setMessage("PARENT_Peptides_WITH_Child_P" + form.getQueryValue());
-        DataRegion rgn = getDataRegion(getContainer(), form);
+        DataRegion rgn = getDataRegion(getContainer(), form, Table.ALL_ROWS);
         rgn.setButtonBar(getGridButtonbar(pv), DataRegion.MODE_GRID);
         GridView gridView = new GridView(rgn, (BindException) null);
         gridView.setFilter(sFilter);
@@ -1173,7 +1175,7 @@ public class PepDBController extends PepDBBaseController
                 "parent_seq_length,parent_aastart,parent_aaend,parent_peptide_flag,parent_peptide_notes"));
         form.setSort(sort);
         form.setMessage("PARENT_Peptides_WITH_Child_Sequence_" + form.getQueryValue());
-        DataRegion rgn = getDataRegion(getContainer(), form);
+        DataRegion rgn = getDataRegion(getContainer(), form, Table.ALL_ROWS);
         rgn.setButtonBar(getGridButtonbar(pv), DataRegion.MODE_GRID);
         GridView gridView = new GridView(rgn, (BindException) null);
         gridView.setFilter(sFilter);
@@ -1189,7 +1191,7 @@ public class PepDBController extends PepDBBaseController
         form.setTInfo(tableInfo);
         form.setCInfo(tableInfo.getColumns("peptide_id,peptide_sequence,protein_cat_id,sequence_length,amino_acid_start_pos," +
                 "amino_acid_end_pos,child,parent,optimal_epitope_list_id,hla_restriction,storage_location,src_file_name,peptide_flag,peptide_notes,createdby,created,modifiedby,modified"));
-        DataRegion rgn = getDataRegion(getContainer(), form);
+        DataRegion rgn = getDataRegion(getContainer(), form, Table.ALL_ROWS);
         rgn.setShowBorders(true);
         rgn.setShadeAlternatingRows(true);
         ButtonBar buttonBar = new ButtonBar();
@@ -1206,7 +1208,7 @@ public class PepDBController extends PepDBBaseController
         return dataView;
     }
 
-    private DataRegion getDataRegion(Container c, PeptideQueryForm form) throws Exception
+    private DataRegion getDataRegion(Container c, PeptideQueryForm form, int maxRows) throws Exception
     {
         DataRegion rgn = new DataRegion();
         List<String> columnList = new ArrayList<String>();
@@ -1241,7 +1243,7 @@ public class PepDBController extends PepDBBaseController
         rgn.setDisplayColumns(displayColumnList);
         rgn.setShowBorders(true);
         rgn.setShadeAlternatingRows(true);
-        rgn.setMaxRows(Table.ALL_ROWS);
+        rgn.setMaxRows(maxRows);
         ViewContext ctx = getViewContext();
         HttpSession session = ctx.getRequest().getSession(true);
         session.setAttribute("PEPTIDE_QUERY_FORM", form);
@@ -1254,6 +1256,9 @@ public class PepDBController extends PepDBBaseController
             qs.addAggregates(new Aggregate(ci, Aggregate.Type.COUNT));
             qs.setMaxRows(Table.ALL_ROWS);
             rgn.setSettings(qs);
+            // We want MOST of the query settings into our dataregion settings, but we still want to paginate the rows.
+            rgn.setMaxRows(maxRows);
+
         }
         return rgn;
     }
