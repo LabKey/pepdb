@@ -1,5 +1,6 @@
 package org.scharp.atlas.pepdb;
 
+import org.jetbrains.annotations.NotNull;
 import org.labkey.api.action.SpringActionController;
 import org.labkey.api.data.*;
 import org.labkey.api.util.DateUtil;
@@ -454,6 +455,7 @@ public class PepDBBaseController extends SpringActionController
             }
         }
 
+        @NotNull
         public String getFormattedValue(RenderContext ctx) {
             StringBuilder sb = new StringBuilder("P");
             sb.append(super.getFormattedValue(ctx));
@@ -525,6 +527,7 @@ public class PepDBBaseController extends SpringActionController
             }
         }
 
+        @NotNull
         public String getFormattedValue(RenderContext ctx) {
             StringBuilder sb = new StringBuilder("PP");
             sb.append(super.getFormattedValue(ctx));
