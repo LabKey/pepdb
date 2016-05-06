@@ -411,7 +411,7 @@ public class PepDBController extends PepDBBaseController
                 buttonBar1.add(updateGroupButton);
             }
             rgn1.setButtonBar(buttonBar1, DataRegion.MODE_DETAILS);
-            DetailsView dataView = new DetailsView(rgn1, new Object[]{form.getPeptide_group_id()});
+            DetailsView dataView = new DetailsView(rgn1, form.getPeptide_group_id());
             dataView.setTitle("Group Information from peptide_group table for group : " + pg.getPeptide_group_name());
             VBox vBox = new VBox();
             vBox.addView(dataView);
@@ -478,7 +478,7 @@ public class PepDBController extends PepDBBaseController
             ActionButton editButton = new ActionButton("Edit Peptide Pool", editUrl);
             buttonBar.add(editButton);
             rgn.setButtonBar(buttonBar, DataRegion.MODE_DETAILS);
-            DetailsView dataView = new DetailsView(rgn, new Object[]{form.getPeptide_pool_id()});
+            DetailsView dataView = new DetailsView(rgn, form.getPeptide_pool_id());
             dataView.setTitle("Pool Information from peptide_pool table for pool : PP" + form.getPeptide_pool_id());
             queryform.setQueryValue(form.getPeptide_pool_id());
             GridView gv = getGridViewByPool(queryform, pv);
@@ -1203,7 +1203,7 @@ public class PepDBController extends PepDBBaseController
         ActionButton editButton = new ActionButton("Edit Peptide", editUrl);
         buttonBar.add(editButton);
         rgn.setButtonBar(buttonBar, DataRegion.MODE_DETAILS);
-        DetailsView dataView = new DetailsView(rgn, new Object[]{p.getPeptide_id()});
+        DetailsView dataView = new DetailsView(rgn, p.getPeptide_id());
         dataView.setTitle("Peptide Detail Information from peptides table for peptide : P" + p.getPeptide_id());
         return dataView;
     }
