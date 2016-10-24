@@ -1253,7 +1253,7 @@ public class PepDBController extends PepDBBaseController
         {
             ColumnInfo ci = rgn.getTable().getColumn("peptide_id");
             QuerySettings qs = new QuerySettings(getViewContext(), rgn.getName());
-            qs.addAggregates(new Aggregate(ci, Aggregate.Type.COUNT));
+            qs.addAggregates(new Aggregate(ci, Aggregate.BaseType.COUNT));
             qs.setMaxRows(Table.ALL_ROWS);
             rgn.setSettings(qs);
             // We want MOST of the query settings into our dataregion settings, but we still want to paginate the rows.
