@@ -1,5 +1,4 @@
 * text=auto !eol
-/PepDB.iml -text
 lib/jstl.jar -text
 lib/standard.jar -text
 /module.properties -text
