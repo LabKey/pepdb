@@ -1,6 +1,4 @@
 * text=auto !eol
-lib/jstl.jar -text
-lib/standard.jar -text
 /module.properties -text
 resources/schemas/dbscripts/postgresql/pepdb-0.00-0.02.sql -text
 resources/schemas/dbscripts/postgresql/pepdb-0.00-2.21.sql -text
