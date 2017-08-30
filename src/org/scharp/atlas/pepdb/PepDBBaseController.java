@@ -167,7 +167,7 @@ public class PepDBBaseController extends SpringActionController
                     errors.reject(null, "Peptide Group must be selected to get peptides in a group.");
                 /*
                 if(StringUtils.trimToNull(getLabId()) == null)
-                    errors.reject(null, "Lab ID must be entered.");
+                    errors.reject(null, "Sequence ID must be entered.");
                     */
             }
             if (getQueryKey() != null && getQueryKey().equals(PepDBSchema.COLUMN_PEPTIDE_POOL_ID))

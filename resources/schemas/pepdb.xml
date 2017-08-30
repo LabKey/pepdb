@@ -24,7 +24,7 @@
                 <columnTitle>Peptide Group Id</columnTitle>
             </column>
             <column columnName="peptide_id_in_group">
-                <columnTitle>Lab ID</columnTitle>
+                <columnTitle>Sequence ID</columnTitle>
             </column>
             <column columnName="peptide_group_name">
                 <columnTitle>Peptide Group Name</columnTitle>
@@ -262,7 +262,7 @@
                 </fk>
             </column>
             <column columnName="child_lab_id">
-                <columnTitle>Child Lab ID</columnTitle>
+                <columnTitle>Child Sequence ID</columnTitle>
             </column>
             <column columnName="child_seq_length">
                 <columnTitle>Child Sequence Length</columnTitle>
@@ -313,7 +313,7 @@
                 </fk>
             </column>
             <column columnName="parent_lab_id">
-                <columnTitle>Parent Lab ID</columnTitle>
+                <columnTitle>Parent Sequence ID</columnTitle>
             </column>
             <column columnName="parent_seq_length">
                 <columnTitle>Parent Sequence Length</columnTitle>
@@ -448,7 +448,7 @@
                 </fk>
             </column>
             <column columnName="peptide_id_in_group">
-                <columnTitle>Lab ID</columnTitle>
+                <columnTitle>Sequence ID</columnTitle>
             </column>
             <column columnName="sequence_length">
                 <columnTitle>Sequence Length</columnTitle>
