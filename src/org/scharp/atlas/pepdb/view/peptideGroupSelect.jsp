@@ -104,7 +104,7 @@
         <%if(bean.getQueryKey() != null && bean.getQueryKey().equals(PepDBSchema.COLUMN_PEPTIDE_GROUP_ID)){%>
         <tr>
             <td>
-                <th>SEQUENCE ID: </th>
+                <th>PEPTIDE NUMBER: </th>
             </td>
             <td>
                 <input type="text" name="labId" size="15" value="<%=bean.getLabId() != null ? bean.getLabId() : ""%>"/>

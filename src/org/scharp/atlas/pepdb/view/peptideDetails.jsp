@@ -26,7 +26,7 @@
         <td>
             <%= textLink(source.getPeptide_group_name(),
                     "displayPeptideGroupInformation.view?peptide_group_id=" + source.getPeptide_group_id().toString()) %>
-            (SEQUENCE ID =<%=source.getPeptide_id_in_group()%>)
+            (PEPTIDE NUMBER =<%=source.getPeptide_id_in_group()%>)
             <%if(source.getFrequency_number() != null){%>
             - Frequency Number =
             <%= source.getFrequency_number()%>
