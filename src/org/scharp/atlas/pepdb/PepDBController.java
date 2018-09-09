@@ -843,17 +843,12 @@ public class PepDBController extends PepDBBaseController
                 DataRegion rgn = getDataRegion(getContainer(), form, Table.ALL_ROWS);
                 context.setBaseFilter(form.getFilter());
                 context.setBaseSort(form.getSort());
-                TSVGridWriter tsv = new TSVGridWriter(rgn.getResultSet(context), rgn.getDisplayColumns());
-                tsv.setFilenamePrefix(form.getMessage());
-                tsv.write(getResponse());
-            }
-            catch (SQLException e)
-            {
-                _log.error("export: " + e);
-            }
-            catch (IOException e)
-            {
-                _log.error("export: " + e);
+
+                try (TSVGridWriter tsv = new TSVGridWriter(rgn.getResultSet(context), rgn.getDisplayColumns()))
+                {
+                    tsv.setFilenamePrefix(form.getMessage());
+                    tsv.write(getResponse());
+                }
             }
             catch (Exception e)
             {
@@ -861,6 +856,7 @@ public class PepDBController extends PepDBBaseController
             }
         }
     }
+
     @RequiresPermission(ReadPermission.class)
     public class PeptidesInPoolTextExportAction extends PeptideTextExportAction
     {
