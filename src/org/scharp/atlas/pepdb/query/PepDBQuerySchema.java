@@ -3,6 +3,7 @@ package org.scharp.atlas.pepdb.query;
 import org.jetbrains.annotations.NotNull;
 import org.labkey.api.data.ColumnInfo;
 import org.labkey.api.data.Container;
+import org.labkey.api.data.ContainerFilter;
 import org.labkey.api.data.DatabaseTableType;
 import org.labkey.api.data.DbSchema;
 import org.labkey.api.data.TableInfo;
@@ -39,9 +40,9 @@ public class PepDBQuerySchema extends SimpleUserSchema
     }
 
     @Override
-    protected TableInfo createWrappedTable(String name, @NotNull TableInfo sourceTable)
+    protected TableInfo createWrappedTable(String name, @NotNull TableInfo sourceTable, ContainerFilter cf)
     {
-        TableInfo table = super.createWrappedTable(name, sourceTable);
+        TableInfo table = super.createWrappedTable(name, sourceTable, cf);
         if (table instanceof SimpleTable)
         {
             // Setting readOnly to false so that tests can reset the data tables via Remote API commands. S. Langley.
