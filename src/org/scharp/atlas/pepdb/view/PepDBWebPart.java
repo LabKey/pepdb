@@ -23,6 +23,7 @@ public class PepDBWebPart extends JspView<Object> {
     /* (non-Javadoc)
      * @see org.labkey.api.view.WebPartView#prepareWebPart(java.lang.Object)
      */
+    @Override
     protected void prepareWebPart(Object object) throws ServletException {
         super.prepareWebPart(object);
         /* try {
