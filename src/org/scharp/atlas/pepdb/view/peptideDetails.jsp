@@ -24,8 +24,7 @@
 
     <tr>
         <td>
-            <%= textLink(source.getPeptide_group_name(),
-                    "displayPeptideGroupInformation.view?peptide_group_id=" + source.getPeptide_group_id().toString()) %>
+            <%= link(source.getPeptide_group_name()).href("displayPeptideGroupInformation.view?peptide_group_id=" + source.getPeptide_group_id().toString()) %>
             (PEPTIDE NUMBER =<%=source.getPeptide_id_in_group()%>)
             <%if(source.getFrequency_number() != null){%>
             - Frequency Number =
@@ -48,7 +47,7 @@
     {%>
     <tr>
         <td>
-            <%= textLink("PP"+pool.getPeptide_pool_id(),
+            <%= link("PP"+pool.getPeptide_pool_id()).href(
                     "displayPeptidePoolInformation.view?peptide_pool_id=" +pool.getPeptide_pool_id()) %> -
             <%=pool.getPeptide_pool_name()%>
             <%=pool.getPool_type_desc()%>
