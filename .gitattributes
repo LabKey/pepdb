@@ -47,3 +47,4 @@ test/sampledata/test_import_files/peptide_file/gagptegprac.txt -text
 test/sampledata/test_import_files/peptide_file/gagptegprac1.txt -text
 test/sampledata/test_import_files/pool_description_file/pool_description.txt -text
 test/sampledata/test_import_files/pool_detail_file/pool_details.txt -text
+test/src/org/labkey/test/tests/external/scharp/PepDBModuleTest.java -text
