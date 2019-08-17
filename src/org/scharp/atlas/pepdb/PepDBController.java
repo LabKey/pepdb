@@ -26,11 +26,9 @@ import java.sql.SQLException;
 import java.io.IOException;
 
 /**
- * Created by IntelliJ IDEA.
  * User: sravani
  * Date: Jul 6, 2009
  * Time: 12:19:21 PM
- * To change this template use File | Settings | File Templates.
  */
 public class PepDBController extends PepDBBaseController
 {
@@ -78,7 +76,8 @@ public class PepDBController extends PepDBBaseController
 
         public NavTree appendNavTrail(NavTree root)
         {
-            return root.addChild("Begin", peptideURL("begin"));
+            root.addChild("Begin", peptideURL("begin"));
+            return root;
         }
     }
 
@@ -132,7 +131,8 @@ public class PepDBController extends PepDBBaseController
 
         public NavTree appendNavTrail(NavTree root)
         {
-            return root.addChild("Search For Peptides By Criteria", peptideURL("searchForPeptides"));
+            root.addChild("Search For Peptides By Criteria", peptideURL("searchForPeptides"));
+            return root;
         }
     }
 
@@ -184,7 +184,8 @@ public class PepDBController extends PepDBBaseController
 
         public NavTree appendNavTrail(NavTree root)
         {
-            return root.addChild("Get Peptides By Criteria", peptideURL("getPeptides"));
+            root.addChild("Get Peptides By Criteria", peptideURL("getPeptides"));
+            return root;
         }
     }
 
@@ -244,7 +245,8 @@ public class PepDBController extends PepDBBaseController
 
         public NavTree appendNavTrail(NavTree root)
         {
-            return root.addChild("Display Peptide Details", peptideURL("displayPeptide"));
+            root.addChild("Display Peptide Details", peptideURL("displayPeptide"));
+            return root;
         }
     }
 
@@ -304,7 +306,8 @@ public class PepDBController extends PepDBBaseController
 
         public NavTree appendNavTrail(NavTree root)
         {
-            return root.addChild("Edit Peptide", peptideURL("editPeptide"));
+            root.addChild("Edit Peptide", peptideURL("editPeptide"));
+            return root;
         }
     }
 
@@ -352,7 +355,8 @@ public class PepDBController extends PepDBBaseController
 
         public NavTree appendNavTrail(NavTree root)
         {
-            return root.addChild("Edit Peptide Pool", peptideURL("editPeptidePool"));
+            root.addChild("Edit Peptide Pool", peptideURL("editPeptidePool"));
+            return root;
         }
     }
 
@@ -385,7 +389,8 @@ public class PepDBController extends PepDBBaseController
 
         public NavTree appendNavTrail(NavTree root)
         {
-            return root.addChild("Display All Peptide Groups", peptideURL("showAllPeptideGroups"));
+            root.addChild("Display All Peptide Groups", peptideURL("showAllPeptideGroups"));
+            return root;
         }
     }
 
@@ -425,7 +430,8 @@ public class PepDBController extends PepDBBaseController
 
         public NavTree appendNavTrail(NavTree root)
         {
-            return root.addChild("Display Peptide Group Details", peptideURL("displayPeptideGroupInformation"));
+            root.addChild("Display Peptide Group Details", peptideURL("displayPeptideGroupInformation"));
+            return root;
         }
     }
 
@@ -454,7 +460,8 @@ public class PepDBController extends PepDBBaseController
 
         public NavTree appendNavTrail(NavTree root)
         {
-            return root.addChild("Display All Peptide Pools", peptideURL("showAllPeptidePools"));
+            root.addChild("Display All Peptide Pools", peptideURL("showAllPeptidePools"));
+            return root;
         }
     }
 
@@ -501,7 +508,8 @@ public class PepDBController extends PepDBBaseController
 
         public NavTree appendNavTrail(NavTree root)
         {
-            return root.addChild("Display Peptide Pool Details", peptideURL("displayPeptidePoolInformation"));
+            root.addChild("Display Peptide Pool Details", peptideURL("displayPeptidePoolInformation"));
+            return root;
         }
     }
 
@@ -559,7 +567,8 @@ public class PepDBController extends PepDBBaseController
 
         public NavTree appendNavTrail(NavTree root)
         {
-            return root.addChild("Update Peptide Group", peptideURL("updatePeptideGroup"));
+            root.addChild("Update Peptide Group", peptideURL("updatePeptideGroup"));
+            return root;
         }
     }
 
@@ -616,7 +625,8 @@ public class PepDBController extends PepDBBaseController
 
         public NavTree appendNavTrail(NavTree root)
         {
-            return root.addChild("Insert Peptide Group", peptideURL("insertPeptideGroup"));
+            root.addChild("Insert Peptide Group", peptideURL("insertPeptideGroup"));
+            return root;
         }
     }
 
@@ -676,7 +686,8 @@ public class PepDBController extends PepDBBaseController
 
         public NavTree appendNavTrail(NavTree root)
         {
-            return root.addChild("Import Peptides", peptideURL("importPeptides"));
+            root.addChild("Import Peptides", peptideURL("importPeptides"));
+            return root;
         }
     }
 
@@ -693,7 +704,8 @@ public class PepDBController extends PepDBBaseController
 
         public NavTree appendNavTrail(NavTree root)
         {
-            return root.addChild("Display Results Page", peptideURL("displayResult"));
+            root.addChild("Display Results Page", peptideURL("displayResult"));
+            return root;
         }
     }
 
@@ -751,7 +763,8 @@ public class PepDBController extends PepDBBaseController
 
         public NavTree appendNavTrail(NavTree root)
         {
-            return root.addChild("Import Peptide Pools", peptideURL("importPeptidePools"));
+            root.addChild("Import Peptide Pools", peptideURL("importPeptidePools"));
+            return root;
         }
     }
 
