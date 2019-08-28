@@ -16,7 +16,6 @@ import org.labkey.api.view.WebPartView;
 import org.scharp.atlas.pepdb.query.PepDBQuerySchema;
 import org.scharp.atlas.pepdb.view.PepDBWebPart;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -27,59 +26,70 @@ public class PepDBModule extends DefaultModule
     private static final Logger _log = Logger.getLogger(DefaultModule.class);
     public static final String NAME = "PepDB";
 
+    @Override
     public String getName()
     {
         return NAME;
     }
 
+    @Override
     public double getVersion()
     {
         return 2.26;
     }
 
+    @Override
     protected void init()
     {
         addController("pepdb", PepDBController.class);
         PepDBQuerySchema.register(this);
     }
 
+    @Override
     @NotNull
     protected Collection<WebPartFactory> createWebPartFactories()
     {
-        return new ArrayList<WebPartFactory>(Arrays.asList(new BaseWebPartFactory("PepDB Summary", WebPartFactory.LOCATION_BODY, WebPartFactory.LOCATION_RIGHT) {
-                {
-                    addLegacyNames("Narrow PepDB Summary");
-                }
+        return Arrays.asList(new BaseWebPartFactory("PepDB Summary", WebPartFactory.LOCATION_BODY, WebPartFactory.LOCATION_RIGHT)
+        {
+            {
+                addLegacyNames("Narrow PepDB Summary");
+            }
 
-                public WebPartView getWebPartView(@NotNull ViewContext portalCtx, @NotNull Portal.WebPart webPart)
-                {
-                    return new PepDBWebPart();
-                }
-            }));
+            @Override
+            public WebPartView getWebPartView(@NotNull ViewContext portalCtx, @NotNull Portal.WebPart webPart)
+            {
+                return new PepDBWebPart();
+            }
+        });
     }
     
+    @Override
     public boolean hasScripts()
     {
         return true;
     }
 
+    @Override
     @NotNull
     public Collection<String> getSummary(Container c)
     {
         return Collections.emptyList();
     }
 
+    @Override
     public void doStartup(ModuleContext moduleContext)
     {
         // add a container listener so we'll know when our container is deleted:
         ContainerManager.addContainerListener(new PepDBContainerListener());
     }
+    @Override
     @NotNull
     public Set<String> getSchemaNames()
     {
         return PageFlowUtil.set(PepDBSchema.getInstance().getSchemaName());
     }
 
+    @Override
     @NotNull
     public Set<DbSchema> getSchemasToTest()
     {
