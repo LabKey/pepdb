@@ -780,12 +780,14 @@ public class PepDBController extends PepDBBaseController
                 DataRegion rgn = getDataRegion(getContainer(), form, Table.ALL_ROWS);
                 context.setBaseFilter(form.getFilter());
                 context.setBaseSort(form.getSort());
-                ExcelWriter ew = new ExcelWriter(rgn.getResultSet(context), rgn.getDisplayColumns());
-                ew.setAutoSize(true);
-                ew.setFilenamePrefix(form.getMessage());
-                ew.setSheetName(form.getMessage());
-                ew.setFooter(form.getMessage());
-                ew.write(getResponse());
+                try (ExcelWriter ew = new ExcelWriter(rgn.getResultSet(context), rgn.getDisplayColumns()))
+                {
+                    ew.setAutoSize(true);
+                    ew.setFilenamePrefix(form.getMessage());
+                    ew.setSheetName(form.getMessage());
+                    ew.setFooter(form.getMessage());
+                    ew.write(getResponse());
+                }
             }
             catch (SQLException e)
             {
