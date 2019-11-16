@@ -36,10 +36,9 @@ public class PepDBController extends PepDBBaseController
     private static DefaultActionResolver _actionResolver =
             new DefaultActionResolver(PepDBController.class);
 
-    private static final String JSP_PATH = "/org/scharp/atlas/pepdb/view/";
-    private static final String PAGE_INDEX = "index.jsp";
-    private static final String PAGE_PEPTIDE_GROUP_SELECT = "peptideGroupSelect.jsp";
-    private static final String PAGE_IMPORT_PEPTIDES = "importPeptides.jsp";
+    private static final String PAGE_INDEX = "/org/scharp/atlas/pepdb/view/index.jsp";
+    private static final String PAGE_PEPTIDE_GROUP_SELECT = "/org/scharp/atlas/pepdb/view/peptideGroupSelect.jsp";
+    private static final String PAGE_IMPORT_PEPTIDES = "/org/scharp/atlas/pepdb/view/importPeptides.jsp";
 
     // Maximum number of rows to display on a web page at once.  Specifying Table.ALL_ROWS was causing a JavaScript timeout.
     private static final int MAX_ROWS = 1000;
@@ -70,7 +69,7 @@ public class PepDBController extends PepDBBaseController
     {
         public ModelAndView getView(DisplayPeptideForm form, BindException errors) throws Exception
         {
-            JspView v = new JspView(JSP_PATH + PAGE_INDEX, form, errors);
+            JspView v = new JspView(PAGE_INDEX, form, errors);
             return v;
         }
 
@@ -91,7 +90,7 @@ public class PepDBController extends PepDBBaseController
             PeptideQueryForm form1 = (PeptideQueryForm) session.getAttribute("QUERY_FORM");
             if (form1 != null && form.getQueryKey() == null)
                 form = form1;
-            JspView v = new JspView<PeptideQueryForm>(JSP_PATH + PAGE_PEPTIDE_GROUP_SELECT, form, errors);
+            JspView v = new JspView<PeptideQueryForm>(PAGE_PEPTIDE_GROUP_SELECT, form, errors);
             return v;
         }
 
@@ -143,7 +142,7 @@ public class PepDBController extends PepDBBaseController
         {
             if (!form.validate(errors))
             {
-                JspView v = new JspView<PeptideQueryForm>(JSP_PATH + PAGE_PEPTIDE_GROUP_SELECT, form, errors);
+                JspView v = new JspView<PeptideQueryForm>(PAGE_PEPTIDE_GROUP_SELECT, form, errors);
                 return v;
             }
             PropertyValues pv = this.getPropertyValues();
@@ -200,7 +199,7 @@ public class PepDBController extends PepDBBaseController
                     || (pepId.trim().toUpperCase().startsWith("P") && validateInteger(pepId.trim().substring(1)) == null))
             {
                 errors.reject(null, "Peptide Id is required and It has to be an Integer with or without prefix 'P'.");
-                JspView v = new JspView(JSP_PATH + PAGE_INDEX, form, errors);
+                JspView v = new JspView(PAGE_INDEX, form, errors);
                 return v;
             }
             if (pepId.trim().toUpperCase().startsWith("P") && validateInteger(pepId.trim().substring(1)) != null)
@@ -209,7 +208,7 @@ public class PepDBController extends PepDBBaseController
             if (p == null)
             {
                 errors.reject(null, "Peptide Id not found in the database.");
-                JspView v = new JspView(JSP_PATH + PAGE_INDEX, form, errors);
+                JspView v = new JspView(PAGE_INDEX, form, errors);
                 return v;
             }
             _log.debug("DisplayPeptideForm: " + form.toString());
@@ -223,7 +222,7 @@ public class PepDBController extends PepDBBaseController
                 dataView.getDataRegion().getDisplayColumn("hla_restriction").setVisible(false);
             }
             box.addView(dataView);
-            JspView detailsView = new JspView<PeptideQueryForm>(JSP_PATH + "peptideDetails.jsp", queryform, errors);
+            JspView detailsView = new JspView<PeptideQueryForm>("/org/scharp/atlas/pepdb/view/peptideDetails.jsp", queryform, errors);
             box.addView(detailsView);
             PropertyValues pv = this.getPropertyValues();
             if (p.isParent())
@@ -637,7 +636,7 @@ public class PepDBController extends PepDBBaseController
 
         public ModelAndView getView(FileForm form, boolean reshow, BindException errors) throws Exception
         {
-            JspView v = new JspView<FileForm>(JSP_PATH + PAGE_IMPORT_PEPTIDES, form, errors);
+            JspView v = new JspView<FileForm>(PAGE_IMPORT_PEPTIDES, form, errors);
             return v;
         }
 
@@ -716,7 +715,7 @@ public class PepDBController extends PepDBBaseController
 
         public ModelAndView getView(FileForm form, boolean reshow, BindException errors) throws Exception
         {
-            JspView v = new JspView<FileForm>(JSP_PATH + "importPools.jsp", form, errors);
+            JspView v = new JspView<FileForm>("/org/scharp/atlas/pepdb/view/importPools.jsp", form, errors);
             return v;
         }
 
