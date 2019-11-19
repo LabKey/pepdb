@@ -779,7 +779,7 @@ public class PepDBController extends PepDBBaseController
                 DataRegion rgn = getDataRegion(getContainer(), form, Table.ALL_ROWS);
                 context.setBaseFilter(form.getFilter());
                 context.setBaseSort(form.getSort());
-                try (ExcelWriter ew = new ExcelWriter(rgn.getResultSet(context), rgn.getDisplayColumns()))
+                try (ExcelWriter ew = new ExcelWriter(rgn.getResults(context), rgn.getDisplayColumns()))
                 {
                     ew.setAutoSize(true);
                     ew.setFilenamePrefix(form.getMessage());
@@ -858,7 +858,7 @@ public class PepDBController extends PepDBBaseController
                 context.setBaseFilter(form.getFilter());
                 context.setBaseSort(form.getSort());
 
-                try (TSVGridWriter tsv = new TSVGridWriter(rgn.getResultSet(context), rgn.getDisplayColumns()))
+                try (TSVGridWriter tsv = new TSVGridWriter(rgn.getResults(context), rgn.getDisplayColumns()))
                 {
                     tsv.setFilenamePrefix(form.getMessage());
                     tsv.write(getResponse());
