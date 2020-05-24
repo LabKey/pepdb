@@ -32,9 +32,8 @@ import java.io.IOException;
  */
 public class PepDBController extends PepDBBaseController
 {
-    private final static Logger _log = Logger.getLogger(PepDBController.class);
-    private static DefaultActionResolver _actionResolver =
-            new DefaultActionResolver(PepDBController.class);
+    private static final Logger _log = Logger.getLogger(PepDBController.class);
+    private static final DefaultActionResolver _actionResolver = new DefaultActionResolver(PepDBController.class);
 
     private static final String PAGE_INDEX = "/org/scharp/atlas/pepdb/view/index.jsp";
     private static final String PAGE_PEPTIDE_GROUP_SELECT = "/org/scharp/atlas/pepdb/view/peptideGroupSelect.jsp";
@@ -73,10 +72,9 @@ public class PepDBController extends PepDBBaseController
             return v;
         }
 
-        public NavTree appendNavTrail(NavTree root)
+        public void addNavTrail(NavTree root)
         {
             root.addChild("Begin", peptideURL("begin"));
-            return root;
         }
     }
 
@@ -128,10 +126,9 @@ public class PepDBController extends PepDBBaseController
             return urlTest;
         }
 
-        public NavTree appendNavTrail(NavTree root)
+        public void addNavTrail(NavTree root)
         {
             root.addChild("Search For Peptides By Criteria", peptideURL("searchForPeptides"));
-            return root;
         }
     }
 
@@ -142,8 +139,7 @@ public class PepDBController extends PepDBBaseController
         {
             if (!form.validate(errors))
             {
-                JspView v = new JspView<PeptideQueryForm>(PAGE_PEPTIDE_GROUP_SELECT, form, errors);
-                return v;
+                return new JspView<>(PAGE_PEPTIDE_GROUP_SELECT, form, errors);
             }
             PropertyValues pv = this.getPropertyValues();
             ViewContext ctx = getViewContext();
@@ -181,10 +177,9 @@ public class PepDBController extends PepDBBaseController
             return gridView;
         }
 
-        public NavTree appendNavTrail(NavTree root)
+        public void addNavTrail(NavTree root)
         {
             root.addChild("Get Peptides By Criteria", peptideURL("getPeptides"));
-            return root;
         }
     }
 
@@ -242,10 +237,9 @@ public class PepDBController extends PepDBBaseController
             return box;
         }
 
-        public NavTree appendNavTrail(NavTree root)
+        public void addNavTrail(NavTree root)
         {
             root.addChild("Display Peptide Details", peptideURL("displayPeptide"));
-            return root;
         }
     }
 
@@ -303,10 +297,9 @@ public class PepDBController extends PepDBBaseController
             return url;
         }
 
-        public NavTree appendNavTrail(NavTree root)
+        public void addNavTrail(NavTree root)
         {
             root.addChild("Edit Peptide", peptideURL("editPeptide"));
-            return root;
         }
     }
 
@@ -352,10 +345,9 @@ public class PepDBController extends PepDBBaseController
             return url;
         }
 
-        public NavTree appendNavTrail(NavTree root)
+        public void addNavTrail(NavTree root)
         {
             root.addChild("Edit Peptide Pool", peptideURL("editPeptidePool"));
-            return root;
         }
     }
 
@@ -386,10 +378,9 @@ public class PepDBController extends PepDBBaseController
             return gridView;
         }
 
-        public NavTree appendNavTrail(NavTree root)
+        public void addNavTrail(NavTree root)
         {
             root.addChild("Display All Peptide Groups", peptideURL("showAllPeptideGroups"));
-            return root;
         }
     }
 
@@ -427,10 +418,9 @@ public class PepDBController extends PepDBBaseController
             return vBox;
         }
 
-        public NavTree appendNavTrail(NavTree root)
+        public void addNavTrail(NavTree root)
         {
             root.addChild("Display Peptide Group Details", peptideURL("displayPeptideGroupInformation"));
-            return root;
         }
     }
 
@@ -457,10 +447,9 @@ public class PepDBController extends PepDBBaseController
             return gridView;
         }
 
-        public NavTree appendNavTrail(NavTree root)
+        public void addNavTrail(NavTree root)
         {
             root.addChild("Display All Peptide Pools", peptideURL("showAllPeptidePools"));
-            return root;
         }
     }
 
@@ -505,10 +494,9 @@ public class PepDBController extends PepDBBaseController
 
         }
 
-        public NavTree appendNavTrail(NavTree root)
+        public void addNavTrail(NavTree root)
         {
             root.addChild("Display Peptide Pool Details", peptideURL("displayPeptidePoolInformation"));
-            return root;
         }
     }
 
@@ -564,10 +552,9 @@ public class PepDBController extends PepDBBaseController
             return url;
         }
 
-        public NavTree appendNavTrail(NavTree root)
+        public void addNavTrail(NavTree root)
         {
             root.addChild("Update Peptide Group", peptideURL("updatePeptideGroup"));
-            return root;
         }
     }
 
@@ -622,10 +609,9 @@ public class PepDBController extends PepDBBaseController
             return url;
         }
 
-        public NavTree appendNavTrail(NavTree root)
+        public void addNavTrail(NavTree root)
         {
             root.addChild("Insert Peptide Group", peptideURL("insertPeptideGroup"));
-            return root;
         }
     }
 
@@ -683,10 +669,9 @@ public class PepDBController extends PepDBBaseController
             return url;
         }
 
-        public NavTree appendNavTrail(NavTree root)
+        public void addNavTrail(NavTree root)
         {
             root.addChild("Import Peptides", peptideURL("importPeptides"));
-            return root;
         }
     }
 
@@ -701,10 +686,9 @@ public class PepDBController extends PepDBBaseController
             return v;
         }
 
-        public NavTree appendNavTrail(NavTree root)
+        public void addNavTrail(NavTree root)
         {
             root.addChild("Display Results Page", peptideURL("displayResult"));
-            return root;
         }
     }
 
@@ -760,10 +744,9 @@ public class PepDBController extends PepDBBaseController
             return url;
         }
 
-        public NavTree appendNavTrail(NavTree root)
+        public void addNavTrail(NavTree root)
         {
             root.addChild("Import Peptide Pools", peptideURL("importPeptidePools"));
-            return root;
         }
     }
 
