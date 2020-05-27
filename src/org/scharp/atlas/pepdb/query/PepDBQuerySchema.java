@@ -27,6 +27,7 @@ public class PepDBQuerySchema extends SimpleUserSchema
     {
         DefaultSchema.registerProvider(SCHEMA_NAME, new DefaultSchema.SchemaProvider(module)
         {
+            @Override
             public QuerySchema createSchema(DefaultSchema schema, Module module)
             {
                 return new PepDBQuerySchema(schema.getUser(), schema.getContainer());

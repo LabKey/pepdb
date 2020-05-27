@@ -56,6 +56,7 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
     public static final String FOLDER_NAME = "PepDB";
     private int peptideStartIndex = 0;
 
+    @Override
     protected String getProjectName()
     {
         return getClass().getSimpleName() + " Project";
@@ -370,6 +371,7 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
         super.doCleanup(afterTest);
     }
 
+    @Override
     public List<String> getAssociatedModules()
     {
         return Arrays.asList("pepdb");
