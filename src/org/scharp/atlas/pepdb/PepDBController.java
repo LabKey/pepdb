@@ -1,29 +1,58 @@
 package org.scharp.atlas.pepdb;
 
-import org.labkey.api.action.*;
-import org.labkey.api.security.RequiresPermission;
-import org.labkey.api.view.*;
-import org.labkey.api.data.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.labkey.api.action.ExportAction;
+import org.labkey.api.action.FormViewAction;
+import org.labkey.api.action.SimpleViewAction;
+import org.labkey.api.attachments.AttachmentFile;
+import org.labkey.api.data.ActionButton;
+import org.labkey.api.data.Aggregate;
+import org.labkey.api.data.ButtonBar;
+import org.labkey.api.data.ColumnInfo;
+import org.labkey.api.data.CompareType;
+import org.labkey.api.data.Container;
+import org.labkey.api.data.DataRegion;
+import org.labkey.api.data.DisplayColumn;
+import org.labkey.api.data.ExcelWriter;
+import org.labkey.api.data.RenderContext;
+import org.labkey.api.data.SimpleFilter;
+import org.labkey.api.data.Sort;
+import org.labkey.api.data.TSVGridWriter;
+import org.labkey.api.data.Table;
+import org.labkey.api.data.TableInfo;
 import org.labkey.api.query.FieldKey;
+import org.labkey.api.query.QuerySettings;
+import org.labkey.api.security.RequiresPermission;
 import org.labkey.api.security.permissions.ReadPermission;
 import org.labkey.api.security.permissions.UpdatePermission;
-import org.labkey.api.attachments.AttachmentFile;
-import org.labkey.api.query.QuerySettings;
-import org.apache.log4j.Logger;
-import org.springframework.web.servlet.ModelAndView;
+import org.labkey.api.view.ActionURL;
+import org.labkey.api.view.DetailsView;
+import org.labkey.api.view.GridView;
+import org.labkey.api.view.HttpView;
+import org.labkey.api.view.InsertView;
+import org.labkey.api.view.JspView;
+import org.labkey.api.view.NavTree;
+import org.labkey.api.view.UpdateView;
+import org.labkey.api.view.VBox;
+import org.labkey.api.view.ViewContext;
+import org.scharp.atlas.pepdb.model.PeptideGroup;
+import org.scharp.atlas.pepdb.model.PeptidePool;
+import org.scharp.atlas.pepdb.model.Peptides;
+import org.scharp.atlas.pepdb.model.ProteinCategory;
+import org.springframework.beans.PropertyValues;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
-import org.springframework.beans.PropertyValues;
-import org.scharp.atlas.pepdb.model.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.List;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.sql.SQLException;
-import java.io.IOException;
+import java.util.List;
 
 /**
  * User: sravani
@@ -32,7 +61,7 @@ import java.io.IOException;
  */
 public class PepDBController extends PepDBBaseController
 {
-    private static final Logger _log = Logger.getLogger(PepDBController.class);
+    private static final Logger _log = LogManager.getLogger(PepDBController.class);
     private static final DefaultActionResolver _actionResolver = new DefaultActionResolver(PepDBController.class);
 
     private static final String PAGE_INDEX = "/org/scharp/atlas/pepdb/view/index.jsp";

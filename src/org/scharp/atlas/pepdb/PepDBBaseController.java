@@ -1,23 +1,31 @@
 package org.scharp.atlas.pepdb;
 
+import org.apache.commons.beanutils.ConversionException;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.labkey.api.action.SpringActionController;
-import org.labkey.api.data.*;
-import org.labkey.api.util.DateUtil;
 import org.labkey.api.attachments.AttachmentFile;
-import org.apache.log4j.Logger;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.beanutils.ConversionException;
-import org.springframework.validation.Errors;
+import org.labkey.api.data.BeanViewForm;
+import org.labkey.api.data.ColumnInfo;
+import org.labkey.api.data.DataColumn;
+import org.labkey.api.data.RenderContext;
+import org.labkey.api.data.SimpleFilter;
+import org.labkey.api.data.Sort;
+import org.labkey.api.data.TableInfo;
+import org.labkey.api.util.DateUtil;
 import org.scharp.atlas.pepdb.model.PeptideGroup;
+import org.scharp.atlas.pepdb.model.PeptidePool;
 import org.scharp.atlas.pepdb.model.Peptides;
 import org.scharp.atlas.pepdb.model.ProteinCategory;
-import org.scharp.atlas.pepdb.model.PeptidePool;
+import org.springframework.validation.Errors;
 
-import java.util.*;
-import java.io.Writer;
 import java.io.IOException;
+import java.io.Writer;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by IntelliJ IDEA.
@@ -28,7 +36,7 @@ import java.sql.SQLException;
  */
 public class PepDBBaseController extends SpringActionController
 {
-    private final static Logger _log = Logger.getLogger(PepDBBaseController.class);
+    private final static Logger _log = LogManager.getLogger(PepDBBaseController.class);
 
     private static final String VIEW_DISPLAY_PEPTIDE = "displayPeptide.view";
     protected static final String QRY_STRING_PEPTIDE_ID = "peptideId";

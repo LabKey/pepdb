@@ -1,11 +1,10 @@
 <%@ taglib prefix="labkey" uri="http://www.labkey.org/taglib" %>
 <%@ page import="org.labkey.api.view.HttpView"%>
-<%@ page import="org.scharp.atlas.pepdb.PepDBManager" %>
-<%@ page import="org.scharp.atlas.pepdb.model.PeptideGroup" %>
-<%@ page import="org.scharp.atlas.pepdb.PepDBBaseController.*" %>
-<%@ page import="java.sql.SQLException" %>
-<%@ page import="org.scharp.atlas.pepdb.PepDBSchema" %>
 <%@ page import="org.labkey.api.view.JspView" %>
+<%@ page import="org.scharp.atlas.pepdb.PepDBBaseController.PeptideQueryForm" %>
+<%@ page import="org.scharp.atlas.pepdb.PepDBManager" %>
+<%@ page import="org.scharp.atlas.pepdb.PepDBSchema" %>
+<%@ page import="org.scharp.atlas.pepdb.model.PeptideGroup" %>
 <%@ page import="org.scharp.atlas.pepdb.model.PeptidePool" %>
 <%@ page import="org.scharp.atlas.pepdb.model.ProteinCategory" %>
 <%@ page extends="org.labkey.api.jsp.JspBase" %>

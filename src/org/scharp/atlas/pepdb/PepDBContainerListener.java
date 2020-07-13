@@ -1,10 +1,11 @@
 package org.scharp.atlas.pepdb;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
-import org.labkey.api.data.ContainerManager.ContainerListener;
 import org.labkey.api.data.Container;
+import org.labkey.api.data.ContainerManager.ContainerListener;
 import org.labkey.api.security.User;
-import org.apache.log4j.Logger;
 
 import java.beans.PropertyChangeEvent;
 import java.util.Collection;
@@ -20,7 +21,7 @@ import java.util.Collections;
 public class PepDBContainerListener implements ContainerListener
 {
 
-    private static final Logger _log = Logger.getLogger(PepDBContainerListener.class);
+    private static final Logger _log = LogManager.getLogger(PepDBContainerListener.class);
 
     @Override
     public void containerCreated(Container c, User user)

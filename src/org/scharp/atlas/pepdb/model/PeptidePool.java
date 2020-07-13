@@ -1,7 +1,8 @@
 package org.scharp.atlas.pepdb.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.labkey.api.data.Entity;
-import org.apache.log4j.Logger;
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,7 +22,7 @@ public class PeptidePool extends Entity
     private Integer parent_pool_id;
     private String parent_pool_name;
     private String matrix_peptide_pool_id;
-    private static Logger log = Logger.getLogger(PeptidePool.class);
+    private static Logger log = LogManager.getLogger(PeptidePool.class);
 
     public PeptidePool()
     {

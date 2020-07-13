@@ -1,16 +1,17 @@
 package org.scharp.atlas.pepdb.view;
 
-import javax.servlet.ServletException;
-
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.labkey.api.view.JspView;
+
+import javax.servlet.ServletException;
 
 /**
  * @version $Id$ 
  */
 public class PepDBWebPart extends JspView<Object> {
 
-    private static Logger _log = Logger.getLogger(PepDBWebPart.class);
+    private static Logger _log = LogManager.getLogger(PepDBWebPart.class);
 
     /**
      * 
