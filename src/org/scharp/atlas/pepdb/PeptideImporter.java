@@ -1,16 +1,21 @@
 package org.scharp.atlas.pepdb;
 
-import org.scharp.atlas.pepdb.model.*;
-import org.labkey.api.security.User;
 import org.labkey.api.attachments.AttachmentFile;
+import org.labkey.api.security.User;
+import org.scharp.atlas.pepdb.model.OptimalEpitopeList;
+import org.scharp.atlas.pepdb.model.Parent;
+import org.scharp.atlas.pepdb.model.PeptideGroup;
+import org.scharp.atlas.pepdb.model.Peptides;
+import org.scharp.atlas.pepdb.model.ProteinCategory;
+import org.scharp.atlas.pepdb.model.Source;
 import org.springframework.validation.Errors;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ArrayList;
-import java.sql.SQLException;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
 
 /**
  * Created by IntelliJ IDEA.

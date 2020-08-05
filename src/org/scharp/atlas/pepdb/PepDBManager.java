@@ -1,6 +1,7 @@
 package org.scharp.atlas.pepdb;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.labkey.api.data.Container;
 import org.labkey.api.data.SQLFragment;
 import org.labkey.api.data.SimpleFilter;
@@ -33,7 +34,7 @@ import java.util.HashMap;
 public class PepDBManager
 {
 
-    private static Logger log = Logger.getLogger(PepDBManager.class);
+    private static Logger log = LogManager.getLogger(PepDBManager.class);
     private static PepDBSchema schema = PepDBSchema.getInstance();
     /**
      * Static class
