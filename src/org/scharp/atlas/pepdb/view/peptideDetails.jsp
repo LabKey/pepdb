@@ -17,15 +17,15 @@
         Source[] sources = PepDBManager.getSourcesForPeptide(bean.getQueryValue());
         if (sources != null && sources.length > 0)
         {%>
-        <h4>Peptide P<%=bean.getQueryValue()%> is a member of these Peptide Groups: </h4>
-    <%     List<Source> sourceList = Arrays.asList(sources);
-        for (Source source : sourceList)
+        <h4>Peptide P<%=h(bean.getQueryValue())%> is a member of these Peptide Groups: </h4>
+    <%
+        for (Source source : sources)
         { %>
 
     <tr>
         <td>
             <%= link(source.getPeptide_group_name()).href("displayPeptideGroupInformation.view?peptide_group_id=" + source.getPeptide_group_id().toString()) %>
-            (PEPTIDE NUMBER =<%=source.getPeptide_id_in_group()%>)
+            (PEPTIDE NUMBER =<%=h(source.getPeptide_id_in_group())%>)
             <%if(source.getFrequency_number() != null){%>
             - Frequency Number =
             <%= source.getFrequency_number()%>
@@ -41,16 +41,16 @@
         PeptidePool[] pools = PepDBManager.getPoolsForPeptide(bean.getQueryValue());
         if (pools != null && pools.length > 0)
         {
-            List<PeptidePool> poolList = Arrays.asList(pools); %>
-        <h4>Peptide P<%=bean.getQueryValue()%> is a member of these Peptide Pools: </h4>
-    <%    for (PeptidePool pool : poolList)
+            %>
+        <h4>Peptide P<%=h(bean.getQueryValue())%> is a member of these Peptide Pools: </h4>
+    <%    for (PeptidePool pool : pools)
     {%>
     <tr>
         <td>
             <%= link("PP"+pool.getPeptide_pool_id()).href(
                     "displayPeptidePoolInformation.view?peptide_pool_id=" +pool.getPeptide_pool_id()) %> -
-            <%=pool.getPeptide_pool_name()%>
-            <%=pool.getPool_type_desc()%>
+            <%=h(pool.getPeptide_pool_name())%>
+            <%=h(pool.getPool_type_desc())%>
         </td>
     </tr>
     <% }} // end if statement %>

@@ -40,8 +40,8 @@ public class PepDBSchema
     public static final String COLUMN_PEPTIDE_POOL_ID = "peptide_pool_id";
     public static final String COLUMN_PARENT_POOL_ID = "parent_pool_id";
     public static final String COLUMN_PEPTIDE_SEQUENCE       = "peptide_sequence";
-     public static final String COLUMN_OPTIMAL_EPITOPE_LIST_ID   = "optimal_epitope_list_id";
-     public static final String COLUMN_AMINO_ACID_START_POS   = "amino_acid_start_pos";
+    public static final String COLUMN_OPTIMAL_EPITOPE_LIST_ID   = "optimal_epitope_list_id";
+    public static final String COLUMN_AMINO_ACID_START_POS   = "amino_acid_start_pos";
     public static final String COLUMN_AMINO_ACID_END_POS   = "amino_acid_end_pos";
     public static final String COLUMN_IS_CHILD   = "child";
     public static final String COLUMN_PEPTIDE_ID_IN_GROUP   = "peptide_id_in_group";

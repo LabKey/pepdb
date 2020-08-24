@@ -3,8 +3,6 @@
 <%@ page import="org.labkey.api.view.JspView"%>
 <%@ page import="org.scharp.atlas.pepdb.PepDBController" %>
 <%@ page extends="org.labkey.api.jsp.JspBase" %>
-
-
 <div>
     <%
         JspView<PepDBController.FileForm> me = (JspView<PepDBController.FileForm>) HttpView.currentView();
@@ -21,8 +19,8 @@
             <tr>
                 <td><th>File Type : </th></td>
                 <td><select id="actionType" name="actionType">
-                    <option value="" <%=bean.getActionType() == null?" selected" :""%>></option>
-                    <option value="PEPTIDES" <%=bean.getActionType() != null && bean.getActionType().equals("PEPTIDES")?" selected":""%>>Peptides</option>
+                    <option value=""<%=selected(bean.getActionType() == null)%>></option>
+                    <option value="PEPTIDES" <%=selected(bean.getActionType() != null && bean.getActionType().equals("PEPTIDES"))%>>Peptides</option>
                     <!--<option value="LANL" <%//bean.getActionType() != null && bean.getActionType().equals("LANL")?" selected":""%>>LANL Peptides</option>-->
                     <!--<option value="NONCHILD" <%//bean.getActionType() != null && bean.getActionType().equals("NONCHILD")?" selected":""%>>Non-Child Peptides</option>-->
                     <!--<option value="CHILD" <%//bean.getActionType() != null && bean.getActionType().equals("CHILD")?" selected":""%>>Child Peptides</option>-->
