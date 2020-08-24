@@ -13,7 +13,7 @@
     PeptideQueryForm bean = me.getModelBean();
     if(bean.getMessage() != null){
 %>
-<%=bean.getMessage()%><%}%>
+<%=h(bean.getMessage())%><%}%>
 <script type="text/javascript">
     function selectOptions()
     {
@@ -28,19 +28,19 @@
             <td><th>Search Criteria : </th></td>
             <td>
                 <select id="queryKey" name="queryKey" onchange="selectOptions()">
-                    <option value="" <%=bean.getQueryKey() == null?" selected" :""%>></option>
-                    <option value="<%=PepDBSchema.COLUMN_PEPTIDE_GROUP_ID%>" <%=bean.getQueryKey() != null && bean.getQueryKey().equals(PepDBSchema.COLUMN_PEPTIDE_GROUP_ID)?" selected":""%>>Peptides in a Peptide Group</option>
-                    <option value="<%=PepDBSchema.COLUMN_PEPTIDE_POOL_ID%>" <%=bean.getQueryKey() != null && bean.getQueryKey().equals(PepDBSchema.COLUMN_PEPTIDE_POOL_ID)?" selected":""%>>Peptides in a Peptide Pool</option>
-                    <option value="<%=PepDBSchema.COLUMN_PROTEIN_CAT_ID%>"<%=bean.getQueryKey() != null && bean.getQueryKey().equals(PepDBSchema.COLUMN_PROTEIN_CAT_ID)?" selected":""%>>Peptides in a Protein Category</option>
-                    <option value="<%=PepDBSchema.COLUMN_PEPTIDE_SEQUENCE%>" <%=bean.getQueryKey() != null && bean.getQueryKey().equals(PepDBSchema.COLUMN_PEPTIDE_SEQUENCE)?" selected":""%>>Peptides contain Sequence</option>
-                    <option value="<%=PepDBSchema.COLUMN_PARENT_SEQUENCE%>" <%=bean.getQueryKey() != null && bean.getQueryKey().equals(PepDBSchema.COLUMN_PARENT_SEQUENCE)?" selected":""%>>Child Peptides By Parent Sequence</option>
-                    <option value="<%=PepDBSchema.COLUMN_CHILD_SEQUENCE%>" <%=bean.getQueryKey() != null && bean.getQueryKey().equals(PepDBSchema.COLUMN_CHILD_SEQUENCE)?" selected":""%>>Parent Peptides By Child Sequence</option>
+                    <option value=""<%=selected(bean.getQueryKey() == null)%>></option>
+                    <option value="<%=h(PepDBSchema.COLUMN_PEPTIDE_GROUP_ID)%>"<%=selected(bean.getQueryKey() != null && bean.getQueryKey().equals(PepDBSchema.COLUMN_PEPTIDE_GROUP_ID))%>>Peptides in a Peptide Group</option>
+                    <option value="<%=h(PepDBSchema.COLUMN_PEPTIDE_POOL_ID)%>"<%=selected(bean.getQueryKey() != null && bean.getQueryKey().equals(PepDBSchema.COLUMN_PEPTIDE_POOL_ID))%>>Peptides in a Peptide Pool</option>
+                    <option value="<%=h(PepDBSchema.COLUMN_PROTEIN_CAT_ID)%>"<%=selected(bean.getQueryKey() != null && bean.getQueryKey().equals(PepDBSchema.COLUMN_PROTEIN_CAT_ID))%>>Peptides in a Protein Category</option>
+                    <option value="<%=h(PepDBSchema.COLUMN_PEPTIDE_SEQUENCE)%>"<%=selected(bean.getQueryKey() != null && bean.getQueryKey().equals(PepDBSchema.COLUMN_PEPTIDE_SEQUENCE))%>>Peptides contain Sequence</option>
+                    <option value="<%=h(PepDBSchema.COLUMN_PARENT_SEQUENCE)%>"<%=selected(bean.getQueryKey() != null && bean.getQueryKey().equals(PepDBSchema.COLUMN_PARENT_SEQUENCE))%>>Child Peptides By Parent Sequence</option>
+                    <option value="<%=h(PepDBSchema.COLUMN_CHILD_SEQUENCE)%>"<%=selected(bean.getQueryKey() != null && bean.getQueryKey().equals(PepDBSchema.COLUMN_CHILD_SEQUENCE))%>>Parent Peptides By Child Sequence</option>
                 </select>
             </td>
         </tr>
         <tr>
             <td>
-                <th><%=(bean.getQueryKey() != null && bean.getQueryKey().equals(PepDBSchema.COLUMN_PEPTIDE_SEQUENCE))?" Equals / Contains : ":" Equals : "%>
+                <th><%=h((bean.getQueryKey() != null && bean.getQueryKey().equals(PepDBSchema.COLUMN_PEPTIDE_SEQUENCE)) ? " Equals / Contains : " : " Equals : ")%>
                 </th>
             </td>
             <td>
@@ -54,7 +54,7 @@
                 <select id="queryValue" name="queryValue">
                     <option value=""></option>
                     <% for(PeptideGroup pepGroup : peptideGroups) { %>
-                    <option value="<%=pepGroup.getPeptide_group_id().toString()%>" <%=bean.getQueryValue() != null && bean.getQueryValue().equals(pepGroup.getPeptide_group_id().toString())?" selected":""%>><%=pepGroup.getPeptide_group_name()%></option>
+                    <option value="<%=pepGroup.getPeptide_group_id()%>"<%=selected(bean.getQueryValue() != null && bean.getQueryValue().equals(pepGroup.getPeptide_group_id().toString()))%>><%=h(pepGroup.getPeptide_group_name())%></option>
                     <% } %> </select>
                 <% }
                 else if (bean.getQueryKey().equals(PepDBSchema.COLUMN_PEPTIDE_POOL_ID)) {
@@ -63,7 +63,7 @@
                 <select id="queryValue" name="queryValue">
                     <option value=""></option>
                     <%for (PeptidePool pepPool : peptidePools) { %>
-                    <option value="<%=pepPool.getPeptide_pool_id().toString()%>" <%=bean.getQueryValue() != null && bean.getQueryValue().equals(pepPool.getPeptide_pool_id().toString())?" selected":""%>><%=pepPool.getPeptide_pool_name()%>(PP<%=pepPool.getPeptide_pool_id()%>)</option>
+                    <option value="<%=pepPool.getPeptide_pool_id()%>"<%=selected(bean.getQueryValue() != null && bean.getQueryValue().equals(pepPool.getPeptide_pool_id().toString()))%>><%=h(pepPool.getPeptide_pool_name())%>(PP<%=pepPool.getPeptide_pool_id()%>)</option>
                     <% }%>
                 </select>
                 <% }
@@ -73,12 +73,12 @@
                 <select id="queryValue" name="queryValue">
                     <option value=""></option>
                     <%for (ProteinCategory proCat : proteinCategories) { %>
-                    <option value="<%=proCat.getProtein_cat_id().toString()%>" <%=bean.getQueryValue() != null && bean.getQueryValue().equals(proCat.getProtein_cat_id().toString())?" selected":""%>><%=proCat.getProtein_cat_desc()%></option>
+                    <option value="<%=proCat.getProtein_cat_id()%>"<%=selected(bean.getQueryValue() != null && bean.getQueryValue().equals(proCat.getProtein_cat_id().toString()))%>><%=h(proCat.getProtein_cat_desc())%></option>
                     <% }%>
                 </select>
                 <%}
                 else if(bean.getQueryKey().equals(PepDBSchema.COLUMN_PEPTIDE_SEQUENCE) || bean.getQueryKey().equals(PepDBSchema.COLUMN_PARENT_SEQUENCE) || bean.getQueryKey().equals(PepDBSchema.COLUMN_CHILD_SEQUENCE)){%>
-                <input type="text" name="queryValue" size="30" value="<%=bean.getQueryValue() != null ? bean.getQueryValue() : ""%>"/> &nbsp;
+                <input type="text" name="queryValue" size="30" value="<%=h(bean.getQueryValue())%>"/> &nbsp;
                 <%}%>
             </td>
         </tr>
@@ -88,7 +88,7 @@
                 <th>Amino Acid Start Position: </th>
             </td>
             <td>
-                <input type="text" name="AAStart" size="15" value="<%=bean.getAAStart() != null ? bean.getAAStart() : ""%>"/>
+                <input type="text" name="AAStart" size="15" value="<%=h(bean.getAAStart())%>"/>
             </td>
         </tr>
         <tr>
@@ -96,7 +96,7 @@
                 <th>Amino Acid End Position: </th>
             </td>
             <td>
-                <input type="text" name="AAEnd" size="15" value="<%=bean.getAAEnd() != null ? bean.getAAEnd() : ""%>"/>
+                <input type="text" name="AAEnd" size="15" value="<%=h(bean.getAAEnd())%>"/>
             </td>
         </tr>
         <%}%>
@@ -106,7 +106,7 @@
                 <th>PEPTIDE NUMBER: </th>
             </td>
             <td>
-                <input type="text" name="labId" size="15" value="<%=bean.getLabId() != null ? bean.getLabId() : ""%>"/>
+                <input type="text" name="labId" size="15" value="<%=h(bean.getLabId())%>"/>
             </td>
         </tr>
         <%}%>

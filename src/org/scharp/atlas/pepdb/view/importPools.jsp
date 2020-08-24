@@ -3,16 +3,14 @@
 <%@ page import="org.scharp.atlas.pepdb.PepDBController" %>
 <%@ page import="org.labkey.api.view.JspView" %>
 <%@ page extends="org.labkey.api.jsp.JspBase" %>
-
-
 <div>
     <%
         JspView<PepDBController.FileForm> me = (JspView<PepDBController.FileForm>) HttpView.currentView();
         PepDBController.FileForm bean = me.getModelBean();
     %>
 
-    <% if(null != bean.getMessage()) {%>
-        <span style="color: green; font-size: 14px; font-weight:bold"><%=bean.getMessage() %></span>
+    <% if (null != bean.getMessage()) {%>
+        <span style="color: green; font-size: 14px; font-weight:bold"><%=h(bean.getMessage())%></span>
     <%}%>
 
     <labkey:errors/>
@@ -26,9 +24,9 @@
             <tr>
                 <td><th>File Type : </th></td>
                 <td><select id="actionType" name="actionType">
-                    <option value="" <%=bean.getActionType() == null?" selected" :""%>></option>
-                    <option value="POOLDESC" <%=bean.getActionType() != null && bean.getActionType().equals("POOLDESC")?" selected":""%>>Pool Descriptions</option>
-                    <option value="POOLPEPTIDES" <%=bean.getActionType() != null && bean.getActionType().equals("POOLPEPTIDES")?" selected":""%>>Peptides in Pool</option>
+                    <option value=""<%=selected(bean.getActionType() == null)%>></option>
+                    <option value="POOLDESC" <%=selected(bean.getActionType() != null && bean.getActionType().equals("POOLDESC"))%>>Pool Descriptions</option>
+                    <option value="POOLPEPTIDES" <%=selected(bean.getActionType() != null && bean.getActionType().equals("POOLPEPTIDES"))%>>Peptides in Pool</option>
                 </select> 
                 </td>
             </tr>
