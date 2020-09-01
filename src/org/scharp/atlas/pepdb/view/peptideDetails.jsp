@@ -5,8 +5,6 @@
 <%@ page import="org.scharp.atlas.pepdb.PepDBManager" %>
 <%@ page import="org.scharp.atlas.pepdb.model.PeptidePool" %>
 <%@ page import="org.scharp.atlas.pepdb.model.Source" %>
-<%@ page import="java.util.Arrays" %>
-<%@ page import="java.util.List" %>
 <%@ page extends="org.labkey.api.jsp.JspBase" %>
 <%
     JspView<PeptideQueryForm> me = (JspView<PeptideQueryForm>) HttpView.currentView();
@@ -30,7 +28,7 @@
             - Frequency Number =
             <%= source.getFrequency_number()%>
             <%}if(source.getFrequency_number_date() != null){%>
-            - Frequency Update Date = <%=source.getFrequency_number_date()%><%}%>
+            - Frequency Update Date = <%=formatDateTime(source.getFrequency_number_date())%><%}%>
         </td>
     </tr>
 
