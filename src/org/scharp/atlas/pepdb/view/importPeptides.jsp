@@ -1,15 +1,16 @@
 <%@ taglib prefix="labkey" uri="http://www.labkey.org/taglib" %>
 <%@ page import="org.labkey.api.view.HttpView"%>
 <%@ page import="org.labkey.api.view.JspView"%>
-<%@ page import="org.scharp.atlas.pepdb.PepDBController" %>
+<%@ page import="org.scharp.atlas.pepdb.PepDBBaseController.FileForm" %>
+<%@ page import="org.scharp.atlas.pepdb.PepDBController.ImportPeptidesAction" %>
 <%@ page extends="org.labkey.api.jsp.JspBase" %>
 <div>
     <%
-        JspView<PepDBController.FileForm> me = (JspView<PepDBController.FileForm>) HttpView.currentView();
-        PepDBController.FileForm bean = me.getModelBean();
+        JspView<FileForm> me = (JspView<FileForm>) HttpView.currentView();
+        FileForm bean = me.getModelBean();
     %>
     <labkey:errors/>
-    <labkey:form name="FileForm" action="importPeptides.post" method="POST" enctype="multipart/form-data">
+    <labkey:form name="FileForm" action="<%=urlFor(ImportPeptidesAction.class)%>" method="POST" enctype="multipart/form-data">
         <table class="normal">
             <tr>
                 <td colspan="3">

@@ -2,6 +2,7 @@
 <%@ page import="org.labkey.api.view.HttpView"%>
 <%@ page import="org.labkey.api.view.JspView" %>
 <%@ page import="org.scharp.atlas.pepdb.PepDBBaseController.PeptideQueryForm" %>
+<%@ page import="org.scharp.atlas.pepdb.PepDBController.SearchForPeptidesAction" %>
 <%@ page import="org.scharp.atlas.pepdb.PepDBManager" %>
 <%@ page import="org.scharp.atlas.pepdb.PepDBSchema" %>
 <%@ page import="org.scharp.atlas.pepdb.model.PeptideGroup" %>
@@ -21,7 +22,7 @@
     }
 </script>
 <labkey:errors/>
-<labkey:form name="PeptideQueryForm" action="searchForPeptides.post" method="post">
+<labkey:form name="PeptideQueryForm" action="<%=urlFor(SearchForPeptidesAction.class)%>" method="post">
     <h3 align="left" style="color:blue">Search for Peptides using different criteria : </h3><br><br>
     <table>
         <tr>
