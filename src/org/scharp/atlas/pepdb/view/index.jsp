@@ -3,7 +3,8 @@
 <%@ page import="org.labkey.api.security.permissions.UpdatePermission" %>
 <%@ page import="org.labkey.api.view.HttpView" %>
 <%@ page import="org.labkey.api.view.ViewContext" %>
-<%@ page import="org.scharp.atlas.pepdb.PepDBController" %>
+<%@ page import="org.scharp.atlas.pepdb.PepDBBaseController.DisplayPeptideForm" %>
+<%@ page import="org.scharp.atlas.pepdb.PepDBController.DisplayPeptideAction" %>
 <%@ page extends="org.labkey.api.jsp.JspBase" %>
 
 <%  ViewContext ctx = getViewContext();
@@ -31,9 +32,9 @@
 </ul>
 <labkey:errors/>
 <%
-    PepDBController.DisplayPeptideForm form = (PepDBController.DisplayPeptideForm) (HttpView.currentModel());
+    DisplayPeptideForm form = (DisplayPeptideForm) (HttpView.currentModel());
 %>
-<labkey:form action="displayPeptide.view" method="get">
+<labkey:form action="<%=urlFor(DisplayPeptideAction.class)%>" method="get">
 Lookup Peptide by Id: <input type="text" name="peptide_id" size="10" value="<%=h(form.getPeptide_id())%>"/> &nbsp; <%= button("Find").submit(true) %>
 </labkey:form>
 <p>

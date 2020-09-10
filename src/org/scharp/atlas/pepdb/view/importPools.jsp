@@ -1,7 +1,8 @@
 <%@ taglib prefix="labkey" uri="http://www.labkey.org/taglib" %>
 <%@ page import="org.labkey.api.view.HttpView"%>
-<%@ page import="org.scharp.atlas.pepdb.PepDBController" %>
 <%@ page import="org.labkey.api.view.JspView" %>
+<%@ page import="org.scharp.atlas.pepdb.PepDBController" %>
+<%@ page import="org.scharp.atlas.pepdb.PepDBController.ImportPeptidePoolsAction" %>
 <%@ page extends="org.labkey.api.jsp.JspBase" %>
 <div>
     <%
@@ -14,7 +15,7 @@
     <%}%>
 
     <labkey:errors/>
-    <labkey:form name="FileForm" action="importPeptidePools.post" method="POST" enctype="multipart/form-data">
+    <labkey:form name="FileForm" action="<%=urlFor(ImportPeptidePoolsAction.class)%>" method="POST" enctype="multipart/form-data">
         <table class="normal">
             <tr>
                 <td colspan="3">
