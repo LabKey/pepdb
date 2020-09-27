@@ -15,6 +15,8 @@ import org.labkey.api.data.SimpleFilter;
 import org.labkey.api.data.Sort;
 import org.labkey.api.data.TableInfo;
 import org.labkey.api.util.DateUtil;
+import org.labkey.api.util.HtmlString;
+import org.labkey.api.util.HtmlStringBuilder;
 import org.scharp.atlas.pepdb.model.PeptideGroup;
 import org.scharp.atlas.pepdb.model.PeptidePool;
 import org.scharp.atlas.pepdb.model.Peptides;
@@ -466,10 +468,10 @@ public class PepDBBaseController extends SpringActionController
 
         @Override
         @NotNull
-        public String getFormattedValue(RenderContext ctx) {
-            StringBuilder sb = new StringBuilder("P");
-            sb.append(super.getFormattedValue(ctx));
-            return sb.toString();
+        public HtmlString getFormattedHtml(RenderContext ctx) {
+            HtmlStringBuilder hsb = HtmlStringBuilder.of("P");
+            hsb.append(super.getFormattedHtml(ctx));
+            return hsb.getHtmlString();
         }
 
         @Override
@@ -543,10 +545,10 @@ public class PepDBBaseController extends SpringActionController
 
         @Override
         @NotNull
-        public String getFormattedValue(RenderContext ctx) {
-            StringBuilder sb = new StringBuilder("PP");
-            sb.append(super.getFormattedValue(ctx));
-            return sb.toString();
+        public HtmlString getFormattedHtml(RenderContext ctx) {
+            HtmlStringBuilder hsb = HtmlStringBuilder.of("PP");
+            hsb.append(super.getFormattedHtml(ctx));
+            return hsb.getHtmlString();
         }
 
         @Override
