@@ -663,9 +663,9 @@ public class PepDBBaseController extends SpringActionController
 
     public static Integer validateInteger(String value)
     {
-        try{
-            Integer intValue = new Integer(value);
-            return intValue;
+        try
+        {
+            return Integer.valueOf(value);
         }
         catch(NumberFormatException e){return null;}
     }
@@ -690,12 +690,10 @@ public class PepDBBaseController extends SpringActionController
 
     public static Float validateFloat(String value)
     {
-        try{
-            Float floatValue = new Float(value);
-            return floatValue;
+        try
+        {
+            return Float.valueOf(value);
         }
         catch(NumberFormatException e){return null;}
     }
-
-
 }
