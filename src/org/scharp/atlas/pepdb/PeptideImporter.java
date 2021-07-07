@@ -305,9 +305,9 @@ public class PeptideImporter
 
     public static Integer validateInteger(String value)
     {
-        try{
-            Integer intValue = new Integer(value);
-            return intValue;
+        try
+        {
+            return Integer.valueOf(value);
         }
         catch(NumberFormatException e){return null;}
     }
