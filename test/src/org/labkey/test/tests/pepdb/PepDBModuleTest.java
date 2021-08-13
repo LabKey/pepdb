@@ -236,7 +236,7 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
     {
         if (cn == null)
         {
-            cn = createDefaultConnection(false);
+            cn = createDefaultConnection();
         }
 
         cleanupTable(cn, "pepdb", "peptide_pool_assignment");
@@ -300,7 +300,7 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
     // Identify the index at which our peptide IDs start.
     private void findPeptideStartIndex() throws IOException
     {
-        Connection cn = createDefaultConnection(false);
+        Connection cn = createDefaultConnection();
         try
         {
             ensureExternalSchema(getProjectName());
