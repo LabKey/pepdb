@@ -17,6 +17,8 @@ import org.labkey.api.data.TableInfo;
 import org.labkey.api.util.DateUtil;
 import org.labkey.api.util.HtmlString;
 import org.labkey.api.util.HtmlStringBuilder;
+import org.labkey.api.util.Link;
+import org.labkey.api.view.ActionURL;
 import org.scharp.atlas.pepdb.model.PeptideGroup;
 import org.scharp.atlas.pepdb.model.PeptidePool;
 import org.scharp.atlas.pepdb.model.Peptides;
@@ -450,13 +452,11 @@ public class PepDBBaseController extends SpringActionController
                 Integer peptideId = (Integer) rowMap.get(c.getName());
                 try
                 {
-                    String href = "displayPeptide.view?" + PepDBSchema.COLUMN_PEPTIDE_ID + "=" + peptideId;
-                    out.write("<a href ='");
-                    out.write(href);
-                    out.write("' ");
-                    out.write("target='_self'>");
-                    out.write("P"+peptideId);
-                    out.write("</a");
+                    new Link.LinkBuilder("P" + peptideId).clearClasses()
+                            .href(new ActionURL(PepDBController.DisplayPeptideAction.class, getContainer())
+                                    .addParameter(PepDBSchema.COLUMN_PEPTIDE_ID, peptideId))
+                            .build()
+                            .appendTo(out);
                 }
                 catch (Exception e)
                 {
@@ -528,13 +528,11 @@ public class PepDBBaseController extends SpringActionController
                 Integer peptidePoolId = (Integer) rowMap.get(c.getName());
                 try
                 {
-                    String href = "displayPeptidePoolInformation.view?" + PepDBSchema.COLUMN_PEPTIDE_POOL_ID + "=" + peptidePoolId;
-                    out.write("<a href ='");
-                    out.write(href);
-                    out.write("' ");
-                    out.write("target='_self'>");
-                    out.write("PP" + peptidePoolId);
-                    out.write("</a>");
+                    new Link.LinkBuilder("PP" + peptidePoolId).clearClasses()
+                            .href(new ActionURL(PepDBController.DisplayPeptidePoolInformationAction.class, getContainer())
+                                    .addParameter(PepDBSchema.COLUMN_PEPTIDE_POOL_ID, peptidePoolId))
+                            .build()
+                            .appendTo(out);
                 }
                 catch (Exception e)
                 {
@@ -605,15 +603,13 @@ public class PepDBBaseController extends SpringActionController
                 Integer parentPoolId = (Integer) rowMap.get(c.getName());
                 try
                 {
-                    String href = "displayPeptidePoolInformation.view?" + PepDBSchema.COLUMN_PEPTIDE_POOL_ID + "=" + parentPoolId;
                     if(parentPoolId != null)
                     {
-                    out.write("<a href ='");
-                    out.write(href);
-                    out.write("' ");
-                    out.write("target='_self'>");
-                    out.write("PP" + parentPoolId);
-                    out.write("</a>");
+                        new Link.LinkBuilder("PP" + parentPoolId).clearClasses()
+                                .href(new ActionURL(PepDBController.DisplayPeptidePoolInformationAction.class, getContainer())
+                                        .addParameter(PepDBSchema.COLUMN_PEPTIDE_POOL_ID, parentPoolId))
+                                .build()
+                                .appendTo(out);
                     }
                 }
                 catch (Exception e)
