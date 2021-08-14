@@ -119,7 +119,7 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
         // Import some test Peptides from a file.
         clickAndWait(Locator.linkWithText("Import Peptides"));
         new Select(getDriver().findElement(By.id("actionType"))).selectByVisibleText("Peptides");
-        getDriver().findElement(By.name("pFile")).sendKeys(getSampledataPath() + "/peptide_file/gagptegprac.txt");
+        setFormElement(Locator.name("pFile"), getSampleData("/peptide_file/gagptegprac.txt"));
         clickButton("Import Peptides");
 
         /*  Import Peptide Pool 'Pool Descriptions' file.
@@ -129,7 +129,7 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
         getDriver().findElement(By.linkText("Import Peptide Pools")).click();
         new Select(getDriver().findElement(By.name("actionType"))).selectByVisibleText("Pool Descriptions");
 
-        getDriver().findElement(By.name("pFile")).sendKeys(getSampledataPath() + "/pool_description_file/pool_description.txt");
+        setFormElement(Locator.name("pFile"), getSampleData("/pool_description_file/pool_description.txt"));
         getDriver().findElement(By.cssSelector("a.labkey-button > span")).click();
 
         /* Import Peptide Pool 'Peptides in Pool' file.
@@ -139,7 +139,7 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
         getDriver().findElement(By.linkText("Import Peptide Pools")).click();
         new Select(getDriver().findElement(By.name("actionType"))).selectByVisibleText("Peptides in Pool");
 
-        getDriver().findElement(By.name("pFile")).sendKeys(getSampledataPath() + "/pool_detail_file/pool_details.txt");
+        setFormElement(Locator.name("pFile"), getSampleData("/pool_detail_file/pool_details.txt"));
         getDriver().findElement(By.cssSelector("a.labkey-button > span")).click();
 
         /* Search for the Peptides belonging to our just-imported pool */
@@ -376,9 +376,8 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
         return Arrays.asList("pepdb");
     }
 
-    public static String getSampledataPath()
+    public static File getSampleData(String sampleDataPath)
     {
-        File path = new File(TestFileUtils.getLabKeyRoot(), "externalModules/scharp/pepdb/test/sampledata/test_import_files");
-        return path.toString();
+        return TestFileUtils.getSampleData("test_import_files" + sampleDataPath);
     }
 }
