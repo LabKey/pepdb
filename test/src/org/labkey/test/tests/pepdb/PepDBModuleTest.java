@@ -208,12 +208,9 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
     }
 
     @LogMethod
-    private void cleanupSchema(Connection cn) throws IOException
+    private void cleanupSchema() throws IOException, CommandException
     {
-        if (cn == null)
-        {
-            cn = createDefaultConnection();
-        }
+        Connection cn = createDefaultConnection();
 
         cleanupTable(cn, "pepdb", "peptide_pool_assignment");
         cleanupTable(cn, "pepdb", "peptide_group_assignment");
@@ -224,28 +221,19 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
     }
 
     @LogMethod
-    private void cleanupTable(Connection cn, String schemaName, String tableName) throws IOException
+    private void cleanupTable(Connection cn, String schemaName, String tableName) throws IOException, CommandException
     {
-        log("** Deleting all " + tableName + " in all containers");
-        try
+        SelectRowsCommand selectCmd = new SelectRowsCommand(schemaName, tableName);
+        selectCmd.setMaxRows(-1);
+        selectCmd.setContainerFilter(ContainerFilter.AllFolders);
+        selectCmd.setColumns(Arrays.asList("*"));
+        SelectRowsResponse selectResp = selectCmd.execute(cn, getProjectName());
+        if (selectResp.getRowCount().intValue() > 0)
         {
-            SelectRowsCommand selectCmd = new SelectRowsCommand(schemaName, tableName);
-            selectCmd.setMaxRows(-1);
-            selectCmd.setContainerFilter(ContainerFilter.AllFolders);
-            selectCmd.setColumns(Arrays.asList("*"));
-            SelectRowsResponse selectResp = selectCmd.execute(cn, getProjectName());
-            if (selectResp.getRowCount().intValue() > 0)
-            {
-                DeleteRowsCommand deleteCmd = new DeleteRowsCommand(schemaName, tableName);
-                deleteCmd.setRows(selectResp.getRows());
-                deleteCmd.execute(cn, getProjectName());
-                assertEquals("Expected no rows remaining", 0, selectCmd.execute(cn, getProjectName()).getRowCount().intValue());
-            }
-        }
-        catch (CommandException e)
-        {
-            log("** Error during cleanupTable:");
-            throw new RuntimeException(e);
+            DeleteRowsCommand deleteCmd = new DeleteRowsCommand(schemaName, tableName);
+            deleteCmd.setRows(selectResp.getRows());
+            deleteCmd.execute(cn, getProjectName());
+            assertEquals("Expected no rows remaining", 0, selectCmd.execute(cn, getProjectName()).getRowCount().intValue());
         }
     }
 
@@ -332,18 +320,18 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
     @Override
     protected void doCleanup(boolean afterTest) throws TestTimeoutException
     {
-        Connection cn = WebTestHelper.getRemoteApiConnection();
-        try
+        if (afterTest)
         {
-            cleanupSchema(cn);
-            _containerHelper.deleteProject(getProjectName(), afterTest);
+            try
+            {
+                cleanupSchema();
+            }
+            catch (IOException | CommandException e)
+            {
+                throw new RuntimeException(e);
+            }
         }
-        catch (IOException e)
-        {
-            throw new RuntimeException(e);
-        }
-        // super method deletes the project.
-        super.doCleanup(afterTest);
+        _containerHelper.deleteProject(getProjectName(), afterTest);
     }
 
     @Override
