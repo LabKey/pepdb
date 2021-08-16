@@ -105,12 +105,12 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
         beginAt(WebTestHelper.buildURL("pepdb", getProjectName() + "/Labs/Test/" + FOLDER_NAME, "begin"));
 
         /*  Insert the Peptide Group" */
-        clickAndWait(getDriver().findElement(Locator.linkWithText("Insert a New Group")));
+        clickAndWait(Locator.linkWithText("Insert a New Group"));
         setFormElement(Locator.name("peptide_group_name"), "gagptegprac");
         selectOptionByText(Locator.name("pathogen_id"), "Other");
         selectOptionByText(Locator.name("clade_id"), "Other");
         selectOptionByText(Locator.name("group_type_id"), "Other");
-        clickAndWait(getDriver().findElement(Locator.css("a.labkey-button > span")));
+        clickAndWait(Locator.css("a.labkey-button > span"));
         clickFolder(FOLDER_NAME);
 
         // Import some test Peptides from a file.
@@ -123,54 +123,54 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
         *     ./test_import_files/pool_description_file/pool_description.txt
         */
         clickFolder(FOLDER_NAME);
-        clickAndWait(getDriver().findElement(Locator.linkWithText("Import Peptide Pools")));
+        clickAndWait(Locator.linkWithText("Import Peptide Pools"));
         selectOptionByText(Locator.name("actionType"), "Pool Descriptions");
 
         setFormElement(Locator.name("pFile"), getSampleData("/pool_description_file/pool_description.txt"));
-        clickAndWait(getDriver().findElement(Locator.css("a.labkey-button > span")));
+        clickAndWait(Locator.css("a.labkey-button > span"));
 
         /* Import Peptide Pool 'Peptides in Pool' file.
           ./test_import_files/pool_detail_file/pool_details.txt
         */
         clickFolder(FOLDER_NAME);
-        clickAndWait(getDriver().findElement(Locator.linkWithText("Import Peptide Pools")));
+        clickAndWait(Locator.linkWithText("Import Peptide Pools"));
         selectOptionByText(Locator.name("actionType"), "Peptides in Pool");
 
         setFormElement(Locator.name("pFile"), getSampleData("/pool_detail_file/pool_details.txt"));
-        clickAndWait(getDriver().findElement(Locator.css("a.labkey-button > span")));
+        clickAndWait(Locator.css("a.labkey-button > span"));
 
         /* Search for the Peptides belonging to our just-imported pool */
         clickFolder(FOLDER_NAME);
-        clickAndWait(getDriver().findElement(Locator.linkWithText("Search for Peptides by Criteria")));
+        clickAndWait(Locator.linkWithText("Search for Peptides by Criteria"));
         selectOptionByText(Locator.name("queryKey"), "Peptides in a Peptide Pool");
         selectOptionByTextContaining(getDriver().findElement(Locator.name("queryValue")), "Prac_Pool");
 
-        clickAndWait(getDriver().findElement(Locator.name("action_type")));
+        clickAndWait(Locator.name("action_type"));
 
         // Identify the index at which our peptide IDs start.
         findPeptideStartIndex();
         // List the peptides in the the 'gagptegprac' Peptide Group. We expect there to be 16 of them.
         clickFolder(FOLDER_NAME);
-        clickAndWait(getDriver().findElement(Locator.linkWithText("Search for Peptides by Criteria")));
+        clickAndWait(Locator.linkWithText("Search for Peptides by Criteria"));
         waitForText("Search for Peptides using different criteria : ");
         selectOptionByText(Locator.id("queryKey"), "Peptides in a Peptide Group");
         selectOptionByText(Locator.id("queryValue"), "gagptegprac");
 
-        clickAndWait(getDriver().findElement(Locator.name("action_type")));
+        clickAndWait(Locator.name("action_type"));
 
         assertTextPresentInThisOrder("There are (16) peptides in the 'gagptegprac' peptide group.");
         // Select a newly uploaded peptide, #3 and edit it to have a storage location of 'Kitchen Sink'
-        clickAndWait(getDriver().findElement(Locator.linkWithText(pepString(4))));
+        clickAndWait(Locator.linkWithText(pepString(4)));
         // Verify the expected record's content
         assertTrue(getDriver().findElement(Locator.xpath("//form[@lk-region-form='peptides']/table/tbody")).getText().matches("^[\\s\\S]*Peptide Id:\\s*" + pepString(4) + "\nPeptide Sequence:\\s*REPRGSDIAGTTSTL\nProtein Category:\\s*p24\nSequence Length:\\s*15\nAAStart:\\s*97\nAAEnd:\\s*111\nIs Child:\\s*false\nIs Parent:\\s*false[\\s\\S]*$"));
 
-        clickAndWait(getDriver().findElement(Locator.xpath("//form[@lk-region-form='peptides']/div/span[2]/a/span")));
+        clickAndWait(Locator.linkWithText("Edit Peptide"));
         setFormElement(Locator.name("storage_location"), "Kitchen Sink");
         clickAndWait(Locator.xpath("//span[text()='Save Changes']"));
 
         // Assert that the Storage Location now contains "Kitchen Sink"
         assertTrue(getDriver().findElement(Locator.xpath("//form[@lk-region-form='peptides']/table/tbody")).getText().matches("^[\\s\\S]*Peptide Id:\\s*" + pepString(4) + "\nPeptide Sequence:\\s*REPRGSDIAGTTSTL\nProtein Category:\\s*p24\nSequence Length:\\s*15\nAAStart:\\s*97\nAAEnd:\\s*111\nIs Child:\\s*false\nIs Parent:\\s*false[\\s\\S]*$"));
-        clickAndWait(getDriver().findElement(Locator.css("a.labkey-button > span")));
+        clickAndWait(Locator.css("a.labkey-button > span"));
 
         //  Search for a single, newly-uploaded peptide and verify it displays as expected.
         setFormElement(Locator.name("peptide_id"), Integer.toString(peptideStartIndex + 9));
@@ -179,7 +179,7 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
         assertTrue(getDriver().findElement(Locator.tagWithAttribute("form", "lk-region-form", "peptides")).getText()
                 .matches("^[\\s\\S]*Peptide Id:\\s*" + pepString(9) + "\nPeptide Sequence:\\s*KCGKEGHQMKDCTER\nProtein Category:\\s*p2p7p1p6\nSequence Length:\\s*15\nAAStart:\\s*52\nAAEnd:\\s*66\nIs Child:\\s*false\nIs Parent:\\s*false\nStorage Location:\\s*\n[\\s\\S]*$"));
 
-        clickAndWait(getDriver().findElement(Locator.css("a.labkey-button > span")));
+        clickAndWait(Locator.css("a.labkey-button > span"));
 
 
         /*
@@ -192,12 +192,12 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
          *
         */
         clickFolder(FOLDER_NAME);
-        clickAndWait(getDriver().findElement(Locator.linkWithText("Search for Peptides by Criteria")));
+        clickAndWait(Locator.linkWithText("Search for Peptides by Criteria"));
         selectOptionByText(Locator.id("queryKey"), "Peptides in a Peptide Pool");
 
         selectOptionByTextContaining(getDriver().findElement(Locator.name("queryValue")), "Prac_Pool");
-        clickAndWait(getDriver().findElement(Locator.name("action_type")));
-        clickAndWait(getDriver().findElement(Locator.linkWithText(pepString(4))));
+        clickAndWait(Locator.name("action_type"));
+        clickAndWait(Locator.linkWithText(pepString(4)));
 
         checker().verifyEquals("", "Peptide Sequence:", getDriver().findElement(Locator.xpath("//form[@lk-region-form='peptides']/table/tbody/tr[2]/td")).getText());
         checker().verifyEquals("", "REPRGSDIAGTTSTL", getDriver().findElement(Locator.xpath("//form[@lk-region-form='peptides']/table/tbody/tr[2]/td[2]")).getText());
