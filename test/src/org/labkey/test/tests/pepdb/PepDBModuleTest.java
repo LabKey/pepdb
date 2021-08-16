@@ -106,8 +106,7 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
 
         /*  Insert the Peptide Group" */
         clickAndWait(getDriver().findElement(Locator.linkWithText("Insert a New Group")));
-        getDriver().findElement(Locator.name("peptide_group_name")).clear();
-        getDriver().findElement(Locator.name("peptide_group_name")).sendKeys("gagptegprac");
+        setFormElement(Locator.name("peptide_group_name"), "gagptegprac");
         selectOptionByText(Locator.name("pathogen_id"), "Other");
         selectOptionByText(Locator.name("clade_id"), "Other");
         selectOptionByText(Locator.name("group_type_id"), "Other");
@@ -163,23 +162,22 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
         // Select a newly uploaded peptide, #3 and edit it to have a storage location of 'Kitchen Sink'
         clickAndWait(getDriver().findElement(Locator.linkWithText(pepString(4))));
         // Verify the expected record's content
-        assertTrue(getDriver().findElement(Locator.xpath("//form[@id='peptides']/table/tbody")).getText().matches("^[\\s\\S]*Peptide Id\\s*" + pepString(4) + "\nPeptide Sequence\\s*REPRGSDIAGTTSTL\nProtein Category\\s*p24\nSequence Length\\s*15\nAAStart\\s*97\nAAEnd\\s*111\nIs Child\\s*false\nIs Parent\\s*false[\\s\\S]*$"));
+        assertTrue(getDriver().findElement(Locator.xpath("//form[@lk-region-form='peptides']/table/tbody")).getText().matches("^[\\s\\S]*Peptide Id:\\s*" + pepString(4) + "\nPeptide Sequence:\\s*REPRGSDIAGTTSTL\nProtein Category:\\s*p24\nSequence Length:\\s*15\nAAStart:\\s*97\nAAEnd:\\s*111\nIs Child:\\s*false\nIs Parent:\\s*false[\\s\\S]*$"));
 
-        clickAndWait(getDriver().findElement(Locator.xpath("//form[@id='peptides']/div/span[2]/a/span")));
-        getDriver().findElement(Locator.name("storage_location")).clear();
-        getDriver().findElement(Locator.name("storage_location")).sendKeys("Kitchen Sink");
+        clickAndWait(getDriver().findElement(Locator.xpath("//form[@lk-region-form='peptides']/div/span[2]/a/span")));
+        setFormElement(Locator.name("storage_location"), "Kitchen Sink");
         clickAndWait(Locator.xpath("//span[text()='Save Changes']"));
 
         // Assert that the Storage Location now contains "Kitchen Sink"
-        assertTrue(getDriver().findElement(Locator.xpath("//form[@id='peptides']/table/tbody")).getText().matches("^[\\s\\S]*Peptide Id\\s*" + pepString(4) + "\nPeptide Sequence\\s*REPRGSDIAGTTSTL\nProtein Category\\s*p24\nSequence Length\\s*15\nAAStart\\s*97\nAAEnd\\s*111\nIs Child\\s*false\nIs Parent\\s*false[\\s\\S]*$"));
+        assertTrue(getDriver().findElement(Locator.xpath("//form[@lk-region-form='peptides']/table/tbody")).getText().matches("^[\\s\\S]*Peptide Id:\\s*" + pepString(4) + "\nPeptide Sequence:\\s*REPRGSDIAGTTSTL\nProtein Category:\\s*p24\nSequence Length:\\s*15\nAAStart:\\s*97\nAAEnd:\\s*111\nIs Child:\\s*false\nIs Parent:\\s*false[\\s\\S]*$"));
         clickAndWait(getDriver().findElement(Locator.css("a.labkey-button > span")));
 
         //  Search for a single, newly-uploaded peptide and verify it displays as expected.
-        getDriver().findElement(Locator.name("peptide_id")).clear();
-        getDriver().findElement(Locator.name("peptide_id")).sendKeys(Integer.toString(peptideStartIndex + 9));
+        setFormElement(Locator.name("peptide_id"), Integer.toString(peptideStartIndex + 9));
         clickButton("Find");
         // Verify the expected record's content
-        assertTrue(getDriver().findElement(Locator.id("peptides")).getText().matches("^[\\s\\S]*Peptide Id\\s*" + pepString(9) + "\nPeptide Sequence\\s*KCGKEGHQMKDCTER\nProtein Category\\s*p2p7p1p6\nSequence Length\\s*15\nAAStart\\s*52\nAAEnd\\s*66\nIs Child\\s*false\nIs Parent\\s*false\nStorage Location\\s*\n[\\s\\S]*$"));
+        assertTrue(getDriver().findElement(Locator.tagWithAttribute("form", "lk-region-form", "peptides")).getText()
+                .matches("^[\\s\\S]*Peptide Id:\\s*" + pepString(9) + "\nPeptide Sequence:\\s*KCGKEGHQMKDCTER\nProtein Category:\\s*p2p7p1p6\nSequence Length:\\s*15\nAAStart:\\s*52\nAAEnd:\\s*66\nIs Child:\\s*false\nIs Parent:\\s*false\nStorage Location:\\s*\n[\\s\\S]*$"));
 
         clickAndWait(getDriver().findElement(Locator.css("a.labkey-button > span")));
 
@@ -201,9 +199,9 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
         clickAndWait(getDriver().findElement(Locator.name("action_type")));
         clickAndWait(getDriver().findElement(Locator.linkWithText(pepString(4))));
 
-        checker().verifyEquals("", "Peptide Sequence", getDriver().findElement(Locator.xpath("//form[@id='peptides']/table/tbody/tr[2]/td")).getText());
-        checker().verifyEquals("", "REPRGSDIAGTTSTL", getDriver().findElement(Locator.xpath("//form[@id='peptides']/table/tbody/tr[2]/td[2]")).getText());
-        checker().verifyEquals("", "gagptegprac (LAB ID =GAG1-4)", getDriver().findElement(Locator.css("#bodypanel > div > table > tbody > tr > td")).getText());
+        checker().verifyEquals("", "Peptide Sequence:", getDriver().findElement(Locator.xpath("//form[@lk-region-form='peptides']/table/tbody/tr[2]/td")).getText());
+        checker().verifyEquals("", "REPRGSDIAGTTSTL", getDriver().findElement(Locator.xpath("//form[@lk-region-form='peptides']/table/tbody/tr[2]/td[2]")).getText());
+        checker().verifyEquals("", "gagptegprac (LAB ID =GAG1-4)", getDriver().findElement(Locator.css(".lk-body-ct div:nth-of-type(2) > table > tbody > tr > td")).getText());
         checker().recordResults();
     }
 
