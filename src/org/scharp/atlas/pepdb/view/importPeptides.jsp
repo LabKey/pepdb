@@ -2,6 +2,7 @@
 <%@ page import="org.labkey.api.view.HttpView"%>
 <%@ page import="org.labkey.api.view.JspView"%>
 <%@ page import="org.scharp.atlas.pepdb.PepDBBaseController.FileForm" %>
+<%@ page import="org.scharp.atlas.pepdb.PepDBController" %>
 <%@ page import="org.scharp.atlas.pepdb.PepDBController.ImportPeptidesAction" %>
 <%@ page extends="org.labkey.api.jsp.JspBase" %>
 <div>
@@ -38,7 +39,7 @@
                 </td>
             </tr>
         </table>
-        <%= button("Import Peptides").submit(true) %>&nbsp;<%= button("Back").href("begin.view") %>
+        <%= button("Import Peptides").submit(true) %>&nbsp;<%= button("Back").href(urlFor(PepDBController.BeginAction.class)) %>
         <br>
         <h5 style="color:orangered;">
             Note: The File must be .txt extension and It should be tab delimited.<br><br>

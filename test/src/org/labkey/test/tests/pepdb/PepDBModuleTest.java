@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.labkey.test.tests.external.scharp;
+package org.labkey.test.tests.pepdb;
 
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -30,12 +30,9 @@ import org.labkey.test.Locator;
 import org.labkey.test.TestFileUtils;
 import org.labkey.test.TestTimeoutException;
 import org.labkey.test.WebTestHelper;
-import org.labkey.test.categories.Disabled;
 import org.labkey.test.categories.External;
 import org.labkey.test.util.LogMethod;
 import org.labkey.test.util.PostgresOnlyTest;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.Select;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,7 +42,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@Category({External.class, Disabled.class})
+@Category({External.class})
 public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTest
 {
 
@@ -105,86 +102,84 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
         assertModuleEnabled("PepDB");
         log("Expected modules enabled.");
 
-        beginAt("/pepdb/" + getProjectName() + "/Labs/Test/" + FOLDER_NAME + "/begin.view?");
+        beginAt(WebTestHelper.buildURL("pepdb", getProjectName() + "/Labs/Test/" + FOLDER_NAME, "begin"));
 
         /*  Insert the Peptide Group" */
-        getDriver().findElement(By.linkText("Insert a New Group")).click();
-        getDriver().findElement(By.name("peptide_group_name")).clear();
-        getDriver().findElement(By.name("peptide_group_name")).sendKeys("gagptegprac");
-        new Select(getDriver().findElement(By.name("pathogen_id"))).selectByVisibleText("Other");
-        new Select(getDriver().findElement(By.name("clade_id"))).selectByVisibleText("Other");
-        new Select(getDriver().findElement(By.name("group_type_id"))).selectByVisibleText("Other");
-        getDriver().findElement(By.cssSelector("a.labkey-button > span")).click();
+        clickAndWait(Locator.linkWithText("Insert a New Group"));
+        setFormElement(Locator.name("peptide_group_name"), "gagptegprac");
+        selectOptionByText(Locator.name("pathogen_id"), "Other");
+        selectOptionByText(Locator.name("clade_id"), "Other");
+        selectOptionByText(Locator.name("group_type_id"), "Other");
+        clickAndWait(Locator.css("a.labkey-button > span"));
         clickFolder(FOLDER_NAME);
 
         // Import some test Peptides from a file.
         clickAndWait(Locator.linkWithText("Import Peptides"));
-        new Select(getDriver().findElement(By.id("actionType"))).selectByVisibleText("Peptides");
-        getDriver().findElement(By.name("pFile")).sendKeys(getSampledataPath() + "/peptide_file/gagptegprac.txt");
+        selectOptionByText(Locator.id("actionType"), "Peptides");
+        setFormElement(Locator.name("pFile"), getSampleData("/peptide_file/gagptegprac.txt"));
         clickButton("Import Peptides");
 
         /*  Import Peptide Pool 'Pool Descriptions' file.
         *     ./test_import_files/pool_description_file/pool_description.txt
         */
         clickFolder(FOLDER_NAME);
-        getDriver().findElement(By.linkText("Import Peptide Pools")).click();
-        new Select(getDriver().findElement(By.name("actionType"))).selectByVisibleText("Pool Descriptions");
+        clickAndWait(Locator.linkWithText("Import Peptide Pools"));
+        selectOptionByText(Locator.name("actionType"), "Pool Descriptions");
 
-        getDriver().findElement(By.name("pFile")).sendKeys(getSampledataPath() + "/pool_description_file/pool_description.txt");
-        getDriver().findElement(By.cssSelector("a.labkey-button > span")).click();
+        setFormElement(Locator.name("pFile"), getSampleData("/pool_description_file/pool_description.txt"));
+        clickAndWait(Locator.css("a.labkey-button > span"));
 
         /* Import Peptide Pool 'Peptides in Pool' file.
           ./test_import_files/pool_detail_file/pool_details.txt
         */
         clickFolder(FOLDER_NAME);
-        getDriver().findElement(By.linkText("Import Peptide Pools")).click();
-        new Select(getDriver().findElement(By.name("actionType"))).selectByVisibleText("Peptides in Pool");
+        clickAndWait(Locator.linkWithText("Import Peptide Pools"));
+        selectOptionByText(Locator.name("actionType"), "Peptides in Pool");
 
-        getDriver().findElement(By.name("pFile")).sendKeys(getSampledataPath() + "/pool_detail_file/pool_details.txt");
-        getDriver().findElement(By.cssSelector("a.labkey-button > span")).click();
+        setFormElement(Locator.name("pFile"), getSampleData("/pool_detail_file/pool_details.txt"));
+        clickAndWait(Locator.css("a.labkey-button > span"));
 
         /* Search for the Peptides belonging to our just-imported pool */
         clickFolder(FOLDER_NAME);
-        getDriver().findElement(By.linkText("Search for Peptides by Criteria")).click();
-        new Select(getDriver().findElement(By.name("queryKey"))).selectByVisibleText("Peptides in a Peptide Pool");
-        selectOptionByTextContaining(getDriver().findElement(By.name("queryValue")), "Prac_Pool");
+        clickAndWait(Locator.linkWithText("Search for Peptides by Criteria"));
+        selectOptionByText(Locator.name("queryKey"), "Peptides in a Peptide Pool");
+        selectOptionByTextContaining(getDriver().findElement(Locator.name("queryValue")), "Prac_Pool");
 
-        getDriver().findElement(By.name("action_type")).click();
+        clickAndWait(Locator.name("action_type"));
 
         // Identify the index at which our peptide IDs start.
         findPeptideStartIndex();
         // List the peptides in the the 'gagptegprac' Peptide Group. We expect there to be 16 of them.
         clickFolder(FOLDER_NAME);
-        getDriver().findElement(By.linkText("Search for Peptides by Criteria")).click();
+        clickAndWait(Locator.linkWithText("Search for Peptides by Criteria"));
         waitForText("Search for Peptides using different criteria : ");
-        new Select(getDriver().findElement(By.id("queryKey"))).selectByVisibleText("Peptides in a Peptide Group");
-        new Select(getDriver().findElement(By.id("queryValue"))).selectByVisibleText("gagptegprac");
+        selectOptionByText(Locator.id("queryKey"), "Peptides in a Peptide Group");
+        selectOptionByText(Locator.id("queryValue"), "gagptegprac");
 
-        getDriver().findElement(By.name("action_type")).click();
+        clickAndWait(Locator.name("action_type"));
 
-        assertTextPresentInThisOrder("There are (16) peptides in the 'gagptegprac' peptide group. ");
+        assertTextPresentInThisOrder("There are (16) peptides in the 'gagptegprac' peptide group.");
         // Select a newly uploaded peptide, #3 and edit it to have a storage location of 'Kitchen Sink'
-        getDriver().findElement(By.linkText(pepString(4))).click();
+        clickAndWait(Locator.linkWithText(pepString(4)));
         // Verify the expected record's content
-        assertTrue(getDriver().findElement(By.xpath("//form[@id='peptides']/table/tbody")).getText().matches("^[\\s\\S]*Peptide Id\\s*" + pepString(4) + "\nPeptide Sequence\\s*REPRGSDIAGTTSTL\nProtein Category\\s*p24\nSequence Length\\s*15\nAAStart\\s*97\nAAEnd\\s*111\nIs Child\\s*false\nIs Parent\\s*false[\\s\\S]*$"));
+        assertTrue(getDriver().findElement(Locator.xpath("//form[@lk-region-form='peptides']/table/tbody")).getText().matches("^[\\s\\S]*Peptide Id:\\s*" + pepString(4) + "\nPeptide Sequence:\\s*REPRGSDIAGTTSTL\nProtein Category:\\s*p24\nSequence Length:\\s*15\nAAStart:\\s*97\nAAEnd:\\s*111\nIs Child:\\s*false\nIs Parent:\\s*false[\\s\\S]*$"));
 
-        getDriver().findElement(By.xpath("//form[@id='peptides']/div/span[2]/a/span")).click();
-        getDriver().findElement(By.name("storage_location")).clear();
-        getDriver().findElement(By.name("storage_location")).sendKeys("Kitchen Sink");
+        clickAndWait(Locator.linkWithText("Edit Peptide"));
+        setFormElement(Locator.name("storage_location"), "Kitchen Sink");
         clickAndWait(Locator.xpath("//span[text()='Save Changes']"));
 
         // Assert that the Storage Location now contains "Kitchen Sink"
-        assertTrue(getDriver().findElement(By.xpath("//form[@id='peptides']/table/tbody")).getText().matches("^[\\s\\S]*Peptide Id\\s*" + pepString(4) + "\nPeptide Sequence\\s*REPRGSDIAGTTSTL\nProtein Category\\s*p24\nSequence Length\\s*15\nAAStart\\s*97\nAAEnd\\s*111\nIs Child\\s*false\nIs Parent\\s*false[\\s\\S]*$"));
-        getDriver().findElement(By.cssSelector("a.labkey-button > span")).click();
+        assertTrue(getDriver().findElement(Locator.xpath("//form[@lk-region-form='peptides']/table/tbody")).getText().matches("^[\\s\\S]*Peptide Id:\\s*" + pepString(4) + "\nPeptide Sequence:\\s*REPRGSDIAGTTSTL\nProtein Category:\\s*p24\nSequence Length:\\s*15\nAAStart:\\s*97\nAAEnd:\\s*111\nIs Child:\\s*false\nIs Parent:\\s*false[\\s\\S]*$"));
+        clickAndWait(Locator.css("a.labkey-button > span"));
 
         //  Search for a single, newly-uploaded peptide and verify it displays as expected.
-        getDriver().findElement(By.name("peptide_id")).clear();
-        getDriver().findElement(By.name("peptide_id")).sendKeys(Integer.toString(peptideStartIndex + 9));
+        setFormElement(Locator.name("peptide_id"), Integer.toString(peptideStartIndex + 9));
         clickButton("Find");
         // Verify the expected record's content
-        assertTrue(getDriver().findElement(By.id("peptides")).getText().matches("^[\\s\\S]*Peptide Id\\s*" + pepString(9) + "\nPeptide Sequence\\s*KCGKEGHQMKDCTER\nProtein Category\\s*p2p7p1p6\nSequence Length\\s*15\nAAStart\\s*52\nAAEnd\\s*66\nIs Child\\s*false\nIs Parent\\s*false\nStorage Location\\s*\n[\\s\\S]*$"));
+        assertTrue(getDriver().findElement(Locator.tagWithAttribute("form", "lk-region-form", "peptides")).getText()
+                .matches("^[\\s\\S]*Peptide Id:\\s*" + pepString(9) + "\nPeptide Sequence:\\s*KCGKEGHQMKDCTER\nProtein Category:\\s*p2p7p1p6\nSequence Length:\\s*15\nAAStart:\\s*52\nAAEnd:\\s*66\nIs Child:\\s*false\nIs Parent:\\s*false\nStorage Location:\\s*\n[\\s\\S]*$"));
 
-        getDriver().findElement(By.cssSelector("a.labkey-button > span")).click();
+        clickAndWait(Locator.css("a.labkey-button > span"));
 
 
         /*
@@ -197,48 +192,23 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
          *
         */
         clickFolder(FOLDER_NAME);
-        getDriver().findElement(By.linkText("Search for Peptides by Criteria")).click();
-        new Select(getDriver().findElement(By.id("queryKey"))).selectByVisibleText("Peptides in a Peptide Pool");
+        clickAndWait(Locator.linkWithText("Search for Peptides by Criteria"));
+        selectOptionByText(Locator.id("queryKey"), "Peptides in a Peptide Pool");
 
-        selectOptionByTextContaining(getDriver().findElement(By.name("queryValue")), "Prac_Pool");
-        getDriver().findElement(By.name("action_type")).click();
-        getDriver().findElement(By.linkText(pepString(4))).click();
+        selectOptionByTextContaining(getDriver().findElement(Locator.name("queryValue")), "Prac_Pool");
+        clickAndWait(Locator.name("action_type"));
+        clickAndWait(Locator.linkWithText(pepString(4)));
 
-        StringBuffer verificationErrors = new StringBuffer();
-        try
-        {
-            assertEquals("Peptide Sequence", getDriver().findElement(By.xpath("//form[@id='peptides']/table/tbody/tr[2]/td")).getText());
-        }
-        catch (Error e)
-        {
-            verificationErrors.append(e.toString());
-        }
-        try
-        {
-            assertEquals("REPRGSDIAGTTSTL", getDriver().findElement(By.xpath("//form[@id='peptides']/table/tbody/tr[2]/td[2]")).getText());
-        }
-        catch (Error e)
-        {
-            verificationErrors.append(e.toString());
-        }
-        try
-        {
-            assertEquals("gagptegprac (LAB ID =GAG1-4)", getDriver().findElement(By.cssSelector("#bodypanel > div > table > tbody > tr > td")).getText());
-        }
-        catch (Error e)
-        {
-            verificationErrors.append(e.toString());
-        }
-
+        checker().verifyEquals("", "Peptide Sequence:", getDriver().findElement(Locator.xpath("//form[@lk-region-form='peptides']/table/tbody/tr[2]/td")).getText());
+        checker().verifyEquals("", "REPRGSDIAGTTSTL", getDriver().findElement(Locator.xpath("//form[@lk-region-form='peptides']/table/tbody/tr[2]/td[2]")).getText());
+        checker().verifyEquals("", "gagptegprac (PEPTIDE NUMBER =GAG1-4)", getDriver().findElement(Locator.css(".lk-body-ct div:nth-of-type(2) > table > tbody > tr > td")).getText());
+        checker().recordResults();
     }
 
     @LogMethod
-    private void cleanupSchema(Connection cn) throws IOException
+    private void cleanupSchema() throws IOException, CommandException
     {
-        if (cn == null)
-        {
-            cn = createDefaultConnection(false);
-        }
+        Connection cn = createDefaultConnection();
 
         cleanupTable(cn, "pepdb", "peptide_pool_assignment");
         cleanupTable(cn, "pepdb", "peptide_group_assignment");
@@ -249,28 +219,19 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
     }
 
     @LogMethod
-    private void cleanupTable(Connection cn, String schemaName, String tableName) throws IOException
+    private void cleanupTable(Connection cn, String schemaName, String tableName) throws IOException, CommandException
     {
-        log("** Deleting all " + tableName + " in all containers");
-        try
+        SelectRowsCommand selectCmd = new SelectRowsCommand(schemaName, tableName);
+        selectCmd.setMaxRows(-1);
+        selectCmd.setContainerFilter(ContainerFilter.AllFolders);
+        selectCmd.setColumns(Arrays.asList("*"));
+        SelectRowsResponse selectResp = selectCmd.execute(cn, getProjectName());
+        if (selectResp.getRowCount().intValue() > 0)
         {
-            SelectRowsCommand selectCmd = new SelectRowsCommand(schemaName, tableName);
-            selectCmd.setMaxRows(-1);
-            selectCmd.setContainerFilter(ContainerFilter.AllFolders);
-            selectCmd.setColumns(Arrays.asList("*"));
-            SelectRowsResponse selectResp = selectCmd.execute(cn, getProjectName());
-            if (selectResp.getRowCount().intValue() > 0)
-            {
-                DeleteRowsCommand deleteCmd = new DeleteRowsCommand(schemaName, tableName);
-                deleteCmd.setRows(selectResp.getRows());
-                deleteCmd.execute(cn, getProjectName());
-                assertEquals("Expected no rows remaining", 0, selectCmd.execute(cn, getProjectName()).getRowCount().intValue());
-            }
-        }
-        catch (CommandException e)
-        {
-            log("** Error during cleanupTable:");
-            e.printStackTrace(System.out);
+            DeleteRowsCommand deleteCmd = new DeleteRowsCommand(schemaName, tableName);
+            deleteCmd.setRows(selectResp.getRows());
+            deleteCmd.execute(cn, getProjectName());
+            assertEquals("Expected no rows remaining", 0, selectCmd.execute(cn, getProjectName()).getRowCount().intValue());
         }
     }
 
@@ -279,7 +240,7 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
     {
         log("** Ensure ExternalSchema: " + USER_SCHEMA_NAME);
 
-        beginAt("/query/" + containerPath + "/admin.view");
+        beginAt(WebTestHelper.buildURL("query", containerPath, "admin"));
 
         if (!isTextPresent("reload"))
         {
@@ -301,7 +262,7 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
     // Identify the index at which our peptide IDs start.
     private void findPeptideStartIndex() throws IOException
     {
-        Connection cn = createDefaultConnection(false);
+        Connection cn = createDefaultConnection();
         try
         {
             ensureExternalSchema(getProjectName());
@@ -357,18 +318,18 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
     @Override
     protected void doCleanup(boolean afterTest) throws TestTimeoutException
     {
-        Connection cn = WebTestHelper.getRemoteApiConnection();
-        try
+        if (afterTest)
         {
-            cleanupSchema(cn);
-            _containerHelper.deleteProject(getProjectName(), afterTest);
+            try
+            {
+                cleanupSchema();
+            }
+            catch (IOException | CommandException e)
+            {
+                throw new RuntimeException(e);
+            }
         }
-        catch (IOException e)
-        {
-            throw new RuntimeException(e);
-        }
-        // super method deletes the project.
-        super.doCleanup(afterTest);
+        _containerHelper.deleteProject(getProjectName(), afterTest);
     }
 
     @Override
@@ -377,9 +338,8 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
         return Arrays.asList("pepdb");
     }
 
-    public static String getSampledataPath()
+    public static File getSampleData(String sampleDataPath)
     {
-        File path = new File(TestFileUtils.getLabKeyRoot(), "externalModules/scharp/pepdb/test/sampledata/test_import_files");
-        return path.toString();
+        return TestFileUtils.getSampleData("test_import_files" + sampleDataPath);
     }
 }
