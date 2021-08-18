@@ -453,6 +453,7 @@ public class PepDBBaseController extends SpringActionController
                 try
                 {
                     new Link.LinkBuilder("P" + peptideId).clearClasses()
+                            .target("_self")
                             .href(new ActionURL(PepDBController.DisplayPeptideAction.class, getContainer())
                                     .addParameter(PepDBSchema.COLUMN_PEPTIDE_ID, peptideId))
                             .build()
@@ -529,6 +530,7 @@ public class PepDBBaseController extends SpringActionController
                 try
                 {
                     new Link.LinkBuilder("PP" + peptidePoolId).clearClasses()
+                            .target("_self")
                             .href(new ActionURL(PepDBController.DisplayPeptidePoolInformationAction.class, getContainer())
                                     .addParameter(PepDBSchema.COLUMN_PEPTIDE_POOL_ID, peptidePoolId))
                             .build()
@@ -606,6 +608,7 @@ public class PepDBBaseController extends SpringActionController
                     if(parentPoolId != null)
                     {
                         new Link.LinkBuilder("PP" + parentPoolId).clearClasses()
+                                .target("_self")
                                 .href(new ActionURL(PepDBController.DisplayPeptidePoolInformationAction.class, getContainer())
                                         .addParameter(PepDBSchema.COLUMN_PEPTIDE_POOL_ID, parentPoolId))
                                 .build()
