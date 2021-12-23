@@ -202,7 +202,6 @@ public class PepDBModuleTest extends BaseWebDriverTest implements PostgresOnlyTe
         checker().verifyEquals("", "Peptide Sequence:", getDriver().findElement(Locator.xpath("//form[@lk-region-form='peptides']/table/tbody/tr[2]/td")).getText());
         checker().verifyEquals("", "REPRGSDIAGTTSTL", getDriver().findElement(Locator.xpath("//form[@lk-region-form='peptides']/table/tbody/tr[2]/td[2]")).getText());
         checker().verifyEquals("", "gagptegprac (PEPTIDE NUMBER =GAG1-4)", getDriver().findElement(Locator.css(".lk-body-ct div:nth-of-type(2) > table > tbody > tr > td")).getText());
-        checker().recordResults();
     }
 
     @LogMethod
