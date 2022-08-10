@@ -848,7 +848,7 @@ public class PepDBController extends PepDBBaseController
                     ew.setFilenamePrefix(form.getMessage());
                     ew.setSheetName(form.getMessage());
                     ew.setFooter(form.getMessage());
-                    ew.write(getResponse());
+                    ew.renderWorkbook(getResponse());
                 }
             }
             catch (SQLException e)
@@ -863,7 +863,6 @@ public class PepDBController extends PepDBBaseController
             {
                 _log.error("export: " + e);
             }
-
         }
     }
 
