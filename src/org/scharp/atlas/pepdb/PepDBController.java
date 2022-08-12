@@ -423,7 +423,7 @@ public class PepDBController extends PepDBBaseController
             DisplayColumn col = rgn.getDisplayColumn(PepDBSchema.COLUMN_PEPTIDE_GROUP_NAME);
             ActionURL displayAction = new ActionURL(DisplayPeptideGroupInformationAction.class, getContainer());
             displayAction.addParameter(PepDBSchema.COLUMN_PEPTIDE_GROUP_ID,"${" + PepDBSchema.COLUMN_PEPTIDE_GROUP_ID + "}");
-            col.setURL(displayAction.toString());
+            col.setURL(displayAction);
             GridView gridView = new GridView(rgn, errors);
             gridView.setTitle("All the Peptide Groups in the System are : ");
             return gridView;
