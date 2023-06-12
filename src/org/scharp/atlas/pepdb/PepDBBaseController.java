@@ -339,6 +339,11 @@ public class PepDBBaseController extends SpringActionController
             set("peptide_id", String.valueOf(peptideID));
         }
 
+        @Override
+        protected boolean deserializeOldValues()
+        {
+            return true;
+        }
     }
 
     public static class PeptidePoolForm extends BeanViewForm<PeptidePool> {
