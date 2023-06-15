@@ -287,7 +287,7 @@ public class PepDBController extends PepDBBaseController
     public class EditPeptideAction extends FormViewAction<PeptideForm>
     {
         @Override
-        public ModelAndView getView(PeptideForm form, boolean reshow, BindException errors) throws Exception
+        public ModelAndView getView(PeptideForm form, boolean reshow, BindException errors)
         {
             Peptides p = PepDBManager.getPeptideById(form.getBean().getPeptide_id());
             UpdateView uView = new UpdateView(form, errors);
@@ -315,10 +315,9 @@ public class PepDBController extends PepDBBaseController
         @Override
         public boolean handlePost(PeptideForm form, BindException errors) throws Exception
         {
+            Peptides oldBean = PepDBManager.getPeptideById(form.getBean().getPeptide_id());
+            form.setOldValues(oldBean);
             Peptides bean = form.getBean();
-            Peptides dbBean = PepDBManager.getPeptideById(bean.getPeptide_id());
-            bean.setCreated(dbBean.getCreated());
-            bean.setCreatedBy(dbBean.getCreatedBy());
             PepDBManager.updatePeptide(getUser(), bean);
             return true;
         }
@@ -352,7 +351,7 @@ public class PepDBController extends PepDBBaseController
     public class EditPeptidePoolAction extends FormViewAction<PeptidePoolForm>
     {
         @Override
-        public ModelAndView getView(PeptidePoolForm form, boolean reshow, BindException errors) throws Exception
+        public ModelAndView getView(PeptidePoolForm form, boolean reshow, BindException errors)
         {
             PeptidePool p = PepDBManager.getPeptidePoolByID(form.getBean().getPeptide_pool_id());
             UpdateView uView = new UpdateView(form, errors);
