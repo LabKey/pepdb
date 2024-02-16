@@ -15,7 +15,7 @@
     if(bean.getMessage() != null){
 %>
 <%=h(bean.getMessage())%><%}%>
-<script type="text/javascript">
+<script type="text/javascript" nonce="<%=getScriptNonce()%>">
     function selectOptions()
     {
         document.PeptideQueryForm.submit();
